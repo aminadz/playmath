@@ -1,0 +1,26 @@
+{
+  "name": "math-interactive-platform",
+  "version": "1.0.0",
+  "description": "منصة الرياضيات التفاعلية للتعليم المتوسط",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "desktop": "python app.py",
+    "build": "pyinstaller --onefile --windowed --name=\"MathPlatform\" app.py"
+  },
+  "keywords": [
+    "math",
+    "education",
+    "interactive",
+    "arabic",
+    "middle-school"
+  ],
+  "author": "الأستاذة شريفي",
+  "license": "MIT",
+  "dependencies": {
+    "pywebview": "^4.4.1"
+  },
+  "devDependencies": {
+    "pyinstaller": "^6.3.0"
+  }
+}

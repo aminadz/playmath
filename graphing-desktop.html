@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرسم البياني - نسخة الكمبيوتر</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            color: white;
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .graphing-app {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .graph-controls {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .function-input {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .function-input label {
+            font-weight: 600;
+            color: #333;
+            min-width: 80px;
+        }
+
+        .function-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Cairo', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .function-input input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .graph-settings {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .setting-group label {
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .setting-group input, .setting-group select {
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .setting-group input:focus, .setting-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .zoom-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .zoom-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .zoom-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .pan-controls {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .pan-controls h3 {
+            margin: 0 0 15px 0;
+            color: #495057;
+            font-size: 18px;
+        }
+
+        .pan-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .pan-btn {
+            background: linear-gradient(135deg, #20bf6b 0%, #0fb9b1 100%);
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .pan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(32, 191, 107, 0.4);
+        }
+
+        .function-examples {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .function-examples h3 {
+            margin: 0 0 15px 0;
+            color: #495057;
+            font-size: 18px;
+        }
+
+        .example-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .example-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .example-item:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateY(-2px);
+        }
+
+        .graph-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        #graphCanvas {
+            border: 3px solid #e0e0e0;
+            border-radius: 12px;
+            width: 100%;
+            height: 600px;
+            max-width: 1200px;
+        }
+
+        #statusMessage {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Desktop-specific optimizations */
+        .graph-controls {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .function-input {
+            grid-column: 1 / -1;
+        }
+
+        .graph-settings {
+            grid-column: 1 / -1;
+        }
+
+        .zoom-controls {
+            grid-column: 1;
+        }
+
+        .pan-controls {
+            grid-column: 2;
+        }
+
+        .function-examples {
+            grid-column: 1 / -1;
+        }
+
+        /* Large screen optimizations */
+        @media (min-width: 1200px) {
+            .graphing-app {
+                max-width: 1600px;
+            }
+            
+            #graphCanvas {
+                height: 700px;
+                max-width: 1400px;
+            }
+        }
+
+        @media (min-width: 1600px) {
+            .graphing-app {
+                max-width: 1800px;
+            }
+            
+            #graphCanvas {
+                height: 800px;
+                max-width: 1600px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-chart-line"></i> الرسم البياني - نسخة الكمبيوتر</h1>
+        <button class="back-btn" onclick="window.location.href='index.html'">
+            <i class="fas fa-arrow-right"></i> العودة للرئيسية
+        </button>
+    </div>
+
+    <div class="graphing-app">
+        <div class="graph-controls">
+            <div class="function-input">
+                <label for="functionInput">الدالة:</label>
+                <input type="text" id="functionInput" placeholder="أدخل الدالة هنا..." value="x^2">
+                <button class="btn" onclick="plotFunction()">
+                    <i class="fas fa-chart-line"></i> رسم
+                </button>
+            </div>
+
+            <div class="graph-settings">
+                <div class="setting-group">
+                    <label for="xMin">X الأدنى:</label>
+                    <input type="number" id="xMin" value="-10" step="0.1">
+                </div>
+                <div class="setting-group">
+                    <label for="xMax">X الأقصى:</label>
+                    <input type="number" id="xMax" value="10" step="0.1">
+                </div>
+                <div class="setting-group">
+                    <label for="yMin">Y الأدنى:</label>
+                    <input type="number" id="yMin" value="-10" step="0.1">
+                </div>
+                <div class="setting-group">
+                    <label for="yMax">Y الأقصى:</label>
+                    <input type="number" id="yMax" value="10" step="0.1">
+                </div>
+                <div class="setting-group">
+                    <label for="precision">الدقة:</label>
+                    <select id="precision">
+                        <option value="500">500 نقطة</option>
+                        <option value="1000" selected>1000 نقطة</option>
+                        <option value="2000">2000 نقطة</option>
+                        <option value="3000">3000 نقطة</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label for="gridType">نوع الشبكة:</label>
+                    <select id="gridType">
+                        <option value="unified" selected>موحدة (مربعة)</option>
+                        <option value="separate">منفصلة (مستطيلة)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="zoomIn()">
+                    <i class="fas fa-search-plus"></i> تكبير
+                </button>
+                <button class="zoom-btn" onclick="zoomOut()">
+                    <i class="fas fa-search-minus"></i> تصغير
+                </button>
+                <button class="btn" onclick="resetView()">
+                    <i class="fas fa-undo"></i> إعادة تعيين
+                </button>
+                <button class="btn" onclick="makeSquare()">
+                    <i class="fas fa-square"></i> نطاق مربع
+                </button>
+            </div>
+
+            <div class="pan-controls">
+                <h3><i class="fas fa-arrows-alt"></i> تحريك المعلم</h3>
+                <div class="pan-buttons">
+                    <button class="pan-btn" onclick="panUp()">
+                        <i class="fas fa-arrow-up"></i> أعلى
+                    </button>
+                    <button class="pan-btn" onclick="panDown()">
+                        <i class="fas fa-arrow-down"></i> أسفل
+                    </button>
+                    <button class="pan-btn" onclick="panLeft()">
+                        <i class="fas fa-arrow-left"></i> يسار
+                    </button>
+                    <button class="pan-btn" onclick="panRight()">
+                        <i class="fas fa-arrow-right"></i> يمين
+                    </button>
+                    <button class="pan-btn" onclick="panCenter()">
+                        <i class="fas fa-crosshairs"></i> مركز
+                    </button>
+                </div>
+            </div>
+
+            <div class="function-examples">
+                <h3><i class="fas fa-lightbulb"></i> أمثلة دوال</h3>
+                <div class="example-list">
+                    <div class="example-item" onclick="setFunction('x')">x</div>
+                    <div class="example-item" onclick="setFunction('x + 1')">x + 1</div>
+                    <div class="example-item" onclick="setFunction('x^2')">x²</div>
+                    <div class="example-item" onclick="setFunction('x^3')">x³</div>
+                    <div class="example-item" onclick="setFunction('sin(x)')">sin(x)</div>
+                    <div class="example-item" onclick="setFunction('cos(x)')">cos(x)</div>
+                    <div class="example-item" onclick="setFunction('tan(x)')">tan(x)</div>
+                    <div class="example-item" onclick="setFunction('e^x')">eˣ</div>
+                    <div class="example-item" onclick="setFunction('ln(x)')">ln(x)</div>
+                    <div class="example-item" onclick="setFunction('sqrt(x)')">√x</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="graph-container">
+            <canvas id="graphCanvas" width="1200" height="600"></canvas>
+            <div id="statusMessage"></div>
+        </div>
+    </div>
+
+    <script src="graphing-desktop.js"></script>
+</body>
+</html>
