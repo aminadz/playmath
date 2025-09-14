@@ -312,7 +312,12 @@ function toggleSolution() {
             solutionContent.innerHTML = `<div style="text-align: left; direction: ltr; font-family: 'Courier New', monospace;">${exercise.answer}</div>`;
         }
     } else {
+        // Check if exercise has a solution property
+        if (exercise.solution) {
+            solutionContent.innerHTML = `<div style="text-align: left; direction: ltr; font-family: 'Courier New', monospace; background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0;">${exercise.solution}</div>`;
+        } else {
         solutionContent.innerHTML = exercise.answer;
+        }
     }
     
     solutionDiv.style.display = 'block';

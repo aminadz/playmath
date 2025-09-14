@@ -9,9 +9,9 @@ const extendedExercises = {
                     answer: "100"
                 },
                 {
-                    question: "اشترى أحمد كتابًا بسعر 250 DA ومحفظة بسعر 150 DA. ما هو المبلغ الإجمالي الذي دفعه أحمد؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">250 + 150 = ?</div>",
-                    options: ["350 DA", "400 DA", "450 DA", "500 DA"],
-                    answer: "400 DA"
+                    question: "اشترى أحمد كتابًا بسعر <span dir='ltr'>DA</span> 250 ومحفظة بسعر <span dir='ltr'>DA</span> 150. ما هو المبلغ الإجمالي الذي دفعه أحمد؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">250 + 150 = ?</div>",
+                    options: ["<span dir='ltr'>DA</span> 350", "<span dir='ltr'>DA</span> 400", "<span dir='ltr'>DA</span> 450", "<span dir='ltr'>DA</span> 500"],
+                    answer: "<span dir='ltr'>DA</span> 400"
                 },
                 {
                     question: "أحسب جداء العددين التاليين:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">15 * 4 = ?</div>",
@@ -19,9 +19,9 @@ const extendedExercises = {
                     answer: "60"
                 },
                 {
-                    question: "كان في حوزة سارة 500 DA، اشترت لعبة بسعر 350 DA. كم بقي معها؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">500 - 350 = ?</div>",
-                    options: ["100 DA", "250 DA", "200 DA", "150 DA"],
-                    answer: "150 DA"
+                    question: "كان في حوزة سارة <span dir='ltr'>DA</span> 500، اشترت لعبة بسعر <span dir='ltr'>DA</span> 350. كم بقي معها؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">500 - 350 = ?</div>",
+                    options: ["<span dir='ltr'>DA</span> 100", "<span dir='ltr'>DA</span> 250", "<span dir='ltr'>DA</span> 200", "<span dir='ltr'>DA</span> 150"],
+                    answer: "<span dir='ltr'>DA</span> 150"
                 },
                 {
                     question: "أوجد ناتج طرح العددين التاليين:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">95 - 30 = ?</div>",
@@ -96,9 +96,9 @@ const extendedExercises = {
                     answer: "5,1"
                 },
                 {
-                    question: "قسم مبلغ 1200 DA بالتساوي على 4 أصدقاء. ما هي حصة كل واحد؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">1200 / 4 = ?</div>",
-                    options: ["300 DA", "250 DA", "400 DA", "200 DA"],
-                    answer: "300 DA"
+                    question: "قسم مبلغ <span dir='ltr'>DA</span> 1200 بالتساوي على 4 أصدقاء. ما هي حصة كل واحد؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">1200 / 4 = ?</div>",
+                    options: ["<span dir='ltr'>DA</span> 300", "<span dir='ltr'>DA</span> 250", "<span dir='ltr'>DA</span> 400", "<span dir='ltr'>DA</span> 200"],
+                    answer: "<span dir='ltr'>DA</span> 300"
                 },
                 {
                     question: "ما هو ناتج قسمة 10 على 4؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">10 / 4 = ?</div>",
@@ -111,9 +111,9 @@ const extendedExercises = {
                     answer: "5,6"
                 },
                 {
-                    question: "إذا كان سعر 3 كراسات هو 105 DA، فما هو سعر الكراس الواحد؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">105 / 3 = ?</div>",
-                    options: ["30 DA", "40 DA", "35 DA", "45 DA"],
-                    answer: "35 DA"
+                    question: "إذا كان سعر 3 كراسات هو <span dir='ltr'>DA</span> 105، فما هو سعر الكراس الواحد؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">105 / 3 = ?</div>",
+                    options: ["<span dir='ltr'>DA</span> 30", "<span dir='ltr'>DA</span> 40", "<span dir='ltr'>DA</span> 35", "<span dir='ltr'>DA</span> 45"],
+                    answer: "<span dir='ltr'>DA</span> 35"
                 }
             ]
         },
@@ -155,7 +155,7 @@ const extendedExercises = {
                 },
                 {
                     question: "مثلث لديه ضلعان متقايسان فقط. ماذا يسمى؟",
-                    options: ["متساوي الساقين", "قائم", "متساوي الأضلاع", "كيفي"],
+                    options: ["متساوي الساقين", "قائم", "متقايس الأضلاع", "كيفي"],
                     answer: "متساوي الساقين"
                 },
                 {
@@ -164,43 +164,48 @@ const extendedExercises = {
                     answer: "مدور"
                 },
                 {
-                    question: "شكل رباعي فيه كل ضلعين متقابلين متوازيان ومتقايسان، وزواياه ليست قائمة. ماذا يسمى؟",
-                    options: ["مستطيل", "معين", "متوازي أضلاع", "شبه منحرف"],
-                    answer: "متوازي أضلاع"
+                    question: "مثلث أضلاعه الثلاثة متقايسة. ماذا يسمى؟",
+                    options: ["متساوي الساقين", "قائم", "متقايس الأضلاع", "كيفي"],
+                    answer: "متقايس الأضلاع"
                 },
                 {
-                    question: "مثلث جميع أضلاعه متقايسة. ماذا يسمى؟",
-                    options: ["متساوي الأضلاع", "متساوي الساقين", "قائم", "كيفي"],
-                    answer: "متساوي الأضلاع"
+                    question: "مثلث إحدى زواياه قائمة. ماذا يسمى؟",
+                    options: ["متقايس الأضلاع", "متساوي الساقين", "قائم", "كيفي"],
+                    answer: "قائم"
                 }
             ]
         },
         "حساب المحيط والمساحة": {
             exercises: [
                 {
-                    question: "مستطيل طوله 8 cm وعرضه 5 cm. ما هو محيطه؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">P = (8 + 5) * 2 = ?</div>",
-                    options: ["26 cm", "13 cm", "40 cm", "21 cm"],
-                    answer: "26 cm"
+                    question: "مستطيل طوله <span dir='ltr'>cm</span> 8 وعرضه <span dir='ltr'>cm</span> 5. ما هو محيطه؟",
+                    options: ["<span dir='ltr'>cm</span> 26", "<span dir='ltr'>cm</span> 13", "<span dir='ltr'>cm</span> 40", "<span dir='ltr'>cm</span> 21"],
+                    answer: "<span dir='ltr'>cm</span> 26",
+                    solution: "P = (8 + 5) * 2 = 26"
                 },
                 {
-                    question: "مربع طول ضلعه 6 cm. ما هي مساحته؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">A = 6 * 6 = ?</div>",
-                    options: ["24 cm²", "36 cm²", "12 cm²", "18 cm²"],
-                    answer: "36 cm²"
+                    question: "مربع طول ضلعه <span dir='ltr'>cm</span> 6. ما هي مساحته؟",
+                    options: ["<span dir='ltr'>cm²</span> 24", "<span dir='ltr'>cm²</span> 36", "<span dir='ltr'>cm²</span> 12", "<span dir='ltr'>cm²</span> 18"],
+                    answer: "<span dir='ltr'>cm²</span> 36",
+                    solution: "A = 6 * 6 = 36"
                 },
                 {
-                    question: "ما هو محيط مربع طول ضلعه 7 cm؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">P = 7 * 4 = ?</div>",
-                    options: ["14 cm", "21 cm", "28 cm", "49 cm"],
-                    answer: "28 cm"
+                    question: "ما هو محيط مربع طول ضلعه <span dir='ltr'>cm</span> 7؟",
+                    options: ["<span dir='ltr'>cm</span> 14", "<span dir='ltr'>cm</span> 21", "<span dir='ltr'>cm</span> 28", "<span dir='ltr'>cm</span> 49"],
+                    answer: "<span dir='ltr'>cm</span> 28",
+                    solution: "P = 7 * 4 = 28"
                 },
                 {
-                    question: "أوجد مساحة مستطيل طوله 10 m وعرضه 4 m.<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">A = 10 * 4 = ?</div>",
-                    options: ["40 m²", "28 m²", "14 m²", "100 m²"],
-                    answer: "40 m²"
+                    question: "أوجد مساحة مستطيل طوله <span dir='ltr'>m</span> 10 وعرضه <span dir='ltr'>m</span> 4.",
+                    options: ["<span dir='ltr'>m²</span> 40", "<span dir='ltr'>m²</span> 28", "<span dir='ltr'>m²</span> 14", "<span dir='ltr'>m²</span> 100"],
+                    answer: "<span dir='ltr'>m²</span> 40",
+                    solution: "A = 10 * 4 = 40"
                 },
                 {
-                    question: "حديقة مربعة الشكل، طول ضلعها 15 m. أراد صاحبها إحاطتها بسياج. ما هو طول السياج اللازم؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">P = 15 * 4 = ?</div>",
-                    options: ["30 m", "45 m", "60 m", "225 m"],
-                    answer: "60 m"
+                    question: "حديقة مربعة الشكل، طول ضلعها <span dir='ltr'>m</span> 15. أراد صاحبها إحاطتها بسياج. ما هو طول السياج اللازم؟",
+                    options: ["<span dir='ltr'>m</span> 30", "<span dir='ltr'>m</span> 45", "<span dir='ltr'>m</span> 60", "<span dir='ltr'>m</span> 225"],
+                    answer: "<span dir='ltr'>m</span> 60",
+                    solution: "P = 15 * 4 = 60"
                 }
             ]
         },
@@ -236,29 +241,52 @@ const extendedExercises = {
         "جمع وطرح وضرب كسور عشرية": {
             exercises: [
                 {
-                    question: "أوجد ناتج الجمع:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">1,5 + 2,25 = ?</div>",
-                    options: ["3,75", "3,50", "4,00", "3,25"],
-                    answer: "3,75"
+                    question: "أوجد ناتج الجمع (نفس المقام):<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">3/10 + 4/10 = ?</div>",
+                    options: ["7/10", "8/10", "9/10", "6/10"],
+                    answer: "7/10",
+                    solution: "3/10 + 4/10 = (3+4)/10 = 7/10"
                 },
                 {
-                    question: "أوجد ناتج الطرح:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">10,5 - 3,2 = ?</div>",
-                    options: ["7,7", "7,3", "6,3", "7,5"],
-                    answer: "7,3"
+                    question: "أوجد ناتج الطرح (نفس المقام):<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">8/100 - 5/100 = ?</div>",
+                    options: ["2/100", "3/100", "4/100", "1/100"],
+                    answer: "3/100",
+                    solution: "8/100 - 5/100 = (8-5)/100 = 3/100"
                 },
                 {
-                    question: "أوجد ناتج الضرب:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">2,5 * 4 = ?</div>",
-                    options: ["8", "9", "10", "12"],
-                    answer: "10"
+                    question: "أوجد ناتج الجمع (مقامات مختلفة):<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">2/10 + 5/10 = ?</div>",
+                    options: ["7/10", "8/10", "9/10", "6/10"],
+                    answer: "7/10",
+                    solution: "2/10 + 5/10 = (2+5)/10 = 7/10"
                 },
                 {
-                    question: "اشترت فاطمة 1,5 kg من التفاح بسعر 200 DA للكيلوغرام الواحد. ما هو المبلغ الذي دفعته؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">1,5 * 200 = ?</div>",
-                    options: ["250 DA", "300 DA", "350 DA", "400 DA"],
-                    answer: "300 DA"
+                    question: "أوجد ناتج الطرح (مقامات مختلفة):<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">8/100 - 5/100 = ?</div>",
+                    options: ["3/100", "4/100", "5/100", "2/100"],
+                    answer: "3/100",
+                    solution: "8/100 - 5/100 = (8-5)/100 = 3/100"
                 },
                 {
-                    question: "أوجد ناتج العملية:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\"> (5,2 + 1,8) * 2 = ?</div>",
-                    options: ["14", "12", "16", "10"],
-                    answer: "14"
+                    question: "أوجد ناتج الضرب:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">2/10 × 3/10 = ?</div>",
+                    options: ["6/100", "8/100", "10/100", "12/100"],
+                    answer: "6/100",
+                    solution: "2/10 × 3/10 = (2×3)/(10×10) = 6/100"
+                },
+                {
+                    question: "أوجد ناتج الجمع (مقامات مختلفة):<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">1/10 + 5/100 = ?</div>",
+                    options: ["15/100", "16/100", "17/100", "18/100"],
+                    answer: "15/100",
+                    solution: "1/10 + 5/100 = 10/100 + 5/100 = (10+5)/100 = 15/100"
+                },
+                {
+                    question: "أوجد ناتج الطرح (مقامات مختلفة):<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">5/10 - 3/10 = ?</div>",
+                    options: ["2/10", "3/10", "4/10", "1/10"],
+                    answer: "2/10",
+                    solution: "5/10 - 3/10 = (5-3)/10 = 2/10"
+                },
+                {
+                    question: "أوجد ناتج الضرب:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">3/100 × 4/10 = ?</div>",
+                    options: ["12/1000", "15/1000", "18/1000", "20/1000"],
+                    answer: "12/1000",
+                    solution: "3/100 × 4/10 = (3×4)/(100×10) = 12/1000"
                 }
             ]
         },
@@ -285,9 +313,9 @@ const extendedExercises = {
                     answer: "على يسار الصفر"
                 },
                 {
-                    question: "إذا كانت وحدة التدريج هي 1 cm، ما هي المسافة بين النقطة D ذات الفاصلة 4 والنقطة E ذات الفاصلة 9؟",
-                    options: ["4 cm", "9 cm", "5 cm", "13 cm"],
-                    answer: "5 cm"
+                    question: "إذا كانت وحدة التدريج هي <span dir='ltr'>cm</span> 1، ما هي المسافة بين النقطة D ذات الفاصلة 4 والنقطة E ذات الفاصلة 9؟",
+                    options: ["<span dir='ltr'>cm</span> 4", "<span dir='ltr'>cm</span> 9", "<span dir='ltr'>cm</span> 5", "<span dir='ltr'>cm</span> 13"],
+                    answer: "<span dir='ltr'>cm</span> 5"
                 }
             ]
         },
@@ -306,16 +334,16 @@ const extendedExercises = {
                 {
                     question: "إذا كانت إحداثيات النقطة A هي (3, 5)، ماذا تمثل القيمة 5؟",
                     options: ["الفاصلة", "الترتيب", "المسافة إلى المبدأ", "لا شيء مما سبق"],
-                    answer: "الترتيب"
+                    answer: "الفاصلة"
                 },
                 {
                     question: "نقطة تقع على محور الفواصل. ماذا تكون قيمة ترتيبها؟",
-                    options: ["1", "-1", "0", "تعتمد على الفاصلة"],
+                    options: ["1", "1-", "0", "تعتمد على الفاصلة"],
                     answer: "0"
                 },
                 {
                     question: "نقطة تقع على محور التراتيب. ماذا تكون قيمة فاصلتها؟",
-                    options: ["1", "-1", "0", "تعتمد على الترتيب"],
+                    options: ["1", "1-", "0", "تعتمد على الترتيب"],
                     answer: "0"
                 }
             ]
@@ -338,7 +366,7 @@ const extendedExercises = {
                     answer: "y + 3"
                 },
                 {
-                    question: "عبر عن مساحة مستطيل طوله L وعرضه 5 cm.",
+                    question: "عبر عن مساحة مستطيل طوله L وعرضه <span dir='ltr'>cm</span> 5.",
                     options: ["L + 5", "2(L+5)", "5L", "L/5"],
                     answer: "5L"
                 },
@@ -352,41 +380,46 @@ const extendedExercises = {
         "تطبيق قاعدة حرفية": {
             exercises: [
                 {
-                    question: "إذا كانت العبارة الحرفية لمحيط مربع هي 4x، احسب محيط مربع طول ضلعه 5 cm.<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">P = 4 * 5 = ?</div>",
-                    options: ["20 cm", "25 cm", "16 cm", "9 cm"],
-                    answer: "20 cm"
+                    question: "إذا كانت العبارة الحرفية لمحيط مربع هي 4x، احسب محيط مربع طول ضلعه <span dir='ltr'>cm</span> 5.",
+                    options: ["<span dir='ltr'>cm</span> 20", "<span dir='ltr'>cm</span> 25", "<span dir='ltr'>cm</span> 16", "<span dir='ltr'>cm</span> 9"],
+                    answer: "<span dir='ltr'>cm</span> 20",
+                    solution: "P = 4 * 5 = 20"
                 },
                 {
-                    question: "من أجل x = 3، ما هي قيمة العبارة 2x + 5؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">2 * 3 + 5 = ?</div>",
+                    question: "من أجل x = 3، ما هي قيمة العبارة 2x + 5؟",
                     options: ["11", "10", "8", "16"],
-                    answer: "11"
+                    answer: "11",
+                    solution: "2 * 3 + 5 = 11"
                 },
                 {
-                    question: "مساحة مستطيل هي L * w. إذا كان L = 10 m و w = 7 m، فما هي مساحته؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">A = 10 * 7 = ?</div>",
-                    options: ["70 m²", "17 m²", "34 m²", "3 m²"],
-                    answer: "70 m²"
+                    question: "مساحة مستطيل هي L * w. إذا كان L = <span dir='ltr'>m</span> 10 و w = <span dir='ltr'>m</span> 7، فما هي مساحته؟",
+                    options: ["<span dir='ltr'>m²</span> 70", "<span dir='ltr'>m²</span> 17", "<span dir='ltr'>m²</span> 34", "<span dir='ltr'>m²</span> 3"],
+                    answer: "<span dir='ltr'>m²</span> 70",
+                    solution: "A = 10 * 7 = 70"
                 },
                 {
-                    question: "إذا كانت y = 2x - 1، أوجد قيمة y عندما تكون x = 4.<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">y = 2 * 4 - 1 = ?</div>",
+                    question: "إذا كانت y = 2x - 1، أوجد قيمة y عندما تكون x = 4.",
                     options: ["7", "8", "9", "6"],
-                    answer: "7"
+                    answer: "7",
+                    solution: "y = 2 * 4 - 1 = 7"
                 },
                 {
-                    question: "سعر الدخول لحديقة هو 50 DA للكبار و 20 DA للأطفال. ما هو سعر الدخول لـ 2 كبار و 3 أطفال حسب القاعدة: 50a + 20b؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">50 * 2 + 20 * 3 = ?</div>",
-                    options: ["160 DA", "150 DA", "170 DA", "140 DA"],
-                    answer: "160 DA"
+                    question: "سعر الدخول لحديقة هو DA 50 للكبار و DA 20 للأطفال. ما هو سعر الدخول لـ 2 كبار و 3 أطفال حسب القاعدة: 50a + 20b؟",
+                    options: ["DA 160", "DA 150", "DA 170", "DA 140"],
+                    answer: "DA 160",
+                    solution: "50 * 2 + 20 * 3 = 160"
                 }
             ]
         },
         "التعرف على وضعيات تناسبية": {
             exercises: [
                 {
-                    question: "إذا كان سعر 3 kg من البرتقال هو 450 DA، فهل سعر 6 kg هو 900 DA؟",
+                    question: "إذا كان سعر <span dir='ltr'>kg</span> 3 من البرتقال هو <span dir='ltr'>DA</span> 450، فهل سعر <span dir='ltr'>kg</span> 6 هو <span dir='ltr'>DA</span> 900؟",
                     options: ["نعم، وضعية تناسبية", "لا، ليست وضعية تناسبية", "لا يمكن المعرفة"],
                     answer: "نعم، وضعية تناسبية"
                 },
                 {
-                    question: "سيارة تقطع 100 km في ساعة واحدة. هل تقطع 300 km في 3 ساعات بنفس السرعة؟",
+                    question: "سيارة تقطع <span dir='ltr'>km</span> 100 في ساعة واحدة. هل تقطع <span dir='ltr'>km</span> 300 في 3 ساعات بنفس السرعة؟",
                     options: ["نعم", "لا"],
                     answer: "نعم"
                 },
@@ -401,7 +434,7 @@ const extendedExercises = {
                     answer: "20"
                 },
                 {
-                    question: "لتحضير كعكة لـ 4 أشخاص نحتاج 200g من الطحين. لكم شخص يمكننا تحضير كعكة باستعمال 500g من الطحين؟",
+                    question: "لتحضير كعكة لـ 4 أشخاص نحتاج <span dir='ltr'>g</span> 200 من الطحين. لكم شخص يمكننا تحضير كعكة باستعمال <span dir='ltr'>g</span> 500 من الطحين؟",
                     options: ["8 أشخاص", "10 أشخاص", "12 شخصًا", "6 أشخاص"],
                     answer: "10 أشخاص"
                 }
@@ -410,19 +443,21 @@ const extendedExercises = {
         "استعمال المقياس والنسب المئوية": {
             exercises: [
                 {
-                    question: "في قسم به 40 تلميذًا، نجح منهم 80%. ما هو عدد التلاميذ الناجحين؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">40 * (80 / 100) = ?</div>",
+                    question: "في قسم به 40 تلميذًا، نجح منهم 80%. ما هو عدد التلاميذ الناجحين؟",
                     options: ["30", "32", "35", "28"],
-                    answer: "32"
+                    answer: "32",
+                    solution: "40 * (80 / 100) = 32"
                 },
                 {
-                    question: "سعر سترة 2500 DA. تم تخفيض سعرها بنسبة 20%. ما هي قيمة التخفيض؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">2500 * (20 / 100) = ?</div>",
-                    options: ["400 DA", "500 DA", "600 DA", "450 DA"],
-                    answer: "500 DA"
+                    question: "سعر سترة <span dir='ltr'>DA</span> 2500. تم تخفيض سعرها بنسبة 20%. ما هي قيمة التخفيض؟",
+                    options: ["<span dir='ltr'>DA</span> 400", "<span dir='ltr'>DA</span> 500", "<span dir='ltr'>DA</span> 600", "<span dir='ltr'>DA</span> 450"],
+                    answer: "<span dir='ltr'>DA</span> 500",
+                    solution: "2500 * (20 / 100) = 500"
                 },
                 {
-                    question: "على خريطة، المسافة بين مدينتين هي 5 cm. إذا كان مقياس الخريطة هو 1/100000، فما هي المسافة الحقيقية بالكيلومتر؟",
-                    options: ["5 km", "50 km", "0,5 km", "500 km"],
-                    answer: "5 km"
+                    question: "على خريطة، المسافة بين مدينتين هي <span dir='ltr'>cm</span> 5. إذا كان مقياس الخريطة هو 1/100000، فما هي المسافة الحقيقية بالكيلومتر؟",
+                    options: ["<span dir='ltr'>km</span> 5", "<span dir='ltr'>km</span> 50", "<span dir='ltr'>km</span> 0,5", "<span dir='ltr'>km</span> 500"],
+                    answer: "<span dir='ltr'>km</span> 5"
                 },
                 {
                     question: "حول النسبة المئوية 25% إلى كسر عشري.",
@@ -430,7 +465,7 @@ const extendedExercises = {
                     answer: "0,25"
                 },
                 {
-                    question: "إذا كانت المسافة الحقيقية بين نقطتين هي 20 km، والمسافة على التصميم هي 10 cm، فما هو مقياس هذا التصميم؟",
+                    question: "إذا كانت المسافة الحقيقية بين نقطتين هي <span dir='ltr'>km</span> 20، والمسافة على التصميم هي <span dir='ltr'>cm</span> 10، فما هو مقياس هذا التصميم؟",
                     options: ["1/200000", "1/20000", "1/2000", "1/200"],
                     answer: "1/200000"
                 }
@@ -539,7 +574,7 @@ const extendedExercises = {
                 },
                 {
                     question: "ماذا يسمى المثلث الذي له زاوية قائمة؟",
-                    options: ["متساوي الساقين", "قائم", "متساوي الأضلاع", "كيفي"],
+                    options: ["متساوي الساقين", "قائم", "متقايس الأضلاع", "كيفي"],
                     answer: "قائم"
                 },
                 {
@@ -548,7 +583,7 @@ const extendedExercises = {
                     answer: "متعامدان وينصف كل منهما الآخر"
                 },
                 {
-                    question: "ماذا نسمي المستقيم الذي يشمل ضلعاً من أضلاع المثلث وعمودي على الضلع المقابل له؟",
+                    question: "ماذا نسمي المستقيم الذي يشمل رأساً من رؤوس المثلث ويعامد الضلع المقابل له؟",
                     options: ["متوسط", "منصف", "محور", "ارتفاع"],
                     answer: "ارتفاع"
                 }
@@ -559,7 +594,8 @@ const extendedExercises = {
                 {
                     question: "ما هي الأداة الهندسية الأساسية لرسم مستقيم عمودي على مستقيم آخر ويمر من نقطة معلومة؟",
                     options: ["المسطرة فقط", "المدور", "الكوس", "المنقلة"],
-                    answer: "الكوس"
+                    answer: "الكوس",
+                    solution: "الكوس هي الأداة الأساسية لرسم مستقيم عمودي. ملاحظة: يمكن أيضاً استعمال المدور لرسم العمودي"
                 },
                 {
                     question: "لرسم مستقيم يوازي مستقيماً آخر من نقطة خارجة عنه، نعتمد على خاصية...",
@@ -645,28 +681,29 @@ const extendedExercises = {
             exercises: [
                 {
                     question: "أحسب المجموع التالي:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">(-5) + (+3) = ?</div>",
-                    options: ["-8", "+8", "-2", "+2"],
-                    answer: "-2"
+                    options: ["8-", "8+", "2-", "2+"],
+                    answer: "2-"
                 },
                 {
                     question: "أحسب الفرق التالي:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">(-7) - (-4) = ?</div>",
-                    options: ["-11", "-3", "+3", "+11"],
-                    answer: "-3"
+                    options: ["11-", "3-", "3+", "11+"],
+                    answer: "3-"
                 },
                 {
                     question: "ما هو ناتج العملية:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\"> (+9) + (-9) = ?</div>",
-                    options: ["0", "+18", "-18", "1"],
+                    options: ["0", "18+", "18-", "1"],
                     answer: "0"
                 },
                 {
                     question: "أحسب المجموع الجبري التالي:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">A = (-2) + (+5) - (-3) = ?</div>",
-                    options: ["0", "+6", "-4", "+10"],
-                    answer: "+6"
+                    options: ["0", "6+", "4-", "10+"],
+                    answer: "6+",
+                    solution: "A = (-2) + (+5) - (-3)<br>الخطوة 1: تحويل الطرح إلى جمع<br>A = (-2) + (+5) + (+3)<br>الخطوة 2: جمع الأعداد الموجبة<br>A = (-2) + 8<br>الخطوة 3: جمع العدد السالب مع الموجب<br>A = 6<br>النتيجة: A = 6+"
                 },
                 {
                     question: "ما هو معاكس العدد 15؟",
-                    options: ["15", "-15", "0", "1/15"],
-                    answer: "-15"
+                    options: ["15", "15-", "0", "1/15"],
+                    answer: "15-"
                 }
             ]
         },
@@ -674,17 +711,17 @@ const extendedExercises = {
             exercises: [
                 {
                     question: "على مستقيم مدرج، فاصلة النقطة A هي 5+ وفاصلة النقطة B هي 2+. ما هي المسافة AB؟",
-                    options: ["3", "7", "-3", "-7"],
+                    options: ["3", "7", "3-", "7-"],
                     answer: "3"
                 },
                 {
                     question: "على مستقيم مدرج، فاصلة النقطة C هي 4- وفاصلة النقطة D هي 1-. ما هي المسافة CD؟",
-                    options: ["5", "-5", "3", "-3"],
+                    options: ["5", "5-", "3", "3-"],
                     answer: "3"
                 },
                 {
                     question: "على مستقيم مدرج، فاصلة النقطة E هي 6+ وفاصلة النقطة F هي 8-. ما هي المسافة EF؟",
-                    options: ["2", "-2", "14", "-14"],
+                    options: ["2", "2-", "14", "14-"],
                     answer: "14"
                 },
                 {
@@ -703,28 +740,33 @@ const extendedExercises = {
             exercises: [
                 {
                     question: "ما هو حل المعادلة التالية؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">x + 5 = 12</div>",
-                    options: ["x = 7", "x = 17", "x = 5", "x = -7"],
-                    answer: "x = 7"
+                    options: ["x = 7", "x = 17", "x = 5", "x = 7-"],
+                    answer: "x = 7",
+                    solution: "x + 5 = 12<br>الخطوة 1: طرح 5 من الطرفين<br>x + 5 - 5 = 12 - 5<br>الخطوة 2: تبسيط<br>x = 7<br>التحقق: 7 + 5 = 12 ✓"
                 },
                 {
                     question: "أوجد قيمة y في المعادلة:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">y - 3 = 10</div>",
-                    options: ["y = 7", "y = 13", "y = -13", "y = 30"],
-                    answer: "y = 13"
+                    options: ["y = 7", "y = 13", "y = 13-", "y = 30"],
+                    answer: "y = 13",
+                    solution: "y - 3 = 10<br>الخطوة 1: إضافة 3 للطرفين<br>y - 3 + 3 = 10 + 3<br>الخطوة 2: تبسيط<br>y = 13<br>التحقق: 13 - 3 = 10 ✓"
                 },
                 {
                     question: "حل المعادلة التالية:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">4a = 24</div>",
                     options: ["a = 20", "a = 28", "a = 6", "a = 96"],
-                    answer: "a = 6"
+                    answer: "a = 6",
+                    solution: "4a = 24<br>الخطوة 1: قسمة الطرفين على 4<br>4a ÷ 4 = 24 ÷ 4<br>الخطوة 2: تبسيط<br>a = 6<br>التحقق: 4 × 6 = 24 ✓"
                 },
                 {
                     question: "ما هي قيمة المجهول في المعادلة؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">z / 2 = 8</div>",
                     options: ["z = 4", "z = 10", "z = 16", "z = 6"],
-                    answer: "z = 16"
+                    answer: "z = 16",
+                    solution: "z / 2 = 8<br>الخطوة 1: ضرب الطرفين في 2<br>z / 2 × 2 = 8 × 2<br>الخطوة 2: تبسيط<br>z = 16<br>التحقق: 16 ÷ 2 = 8 ✓"
                 },
                 {
                     question: "إذا كان <div style=\"display: inline-block; text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">2x + 1 = 11</div>، فما هي قيمة x؟",
                     options: ["x = 6", "x = 10", "x = 12", "x = 5"],
-                    answer: "x = 5"
+                    answer: "x = 5",
+                    solution: "2x + 1 = 11<br>الخطوة 1: طرح 1 من الطرفين<br>2x + 1 - 1 = 11 - 1<br>الخطوة 2: تبسيط<br>2x = 10<br>الخطوة 3: قسمة الطرفين على 2<br>2x ÷ 2 = 10 ÷ 2<br>الخطوة 4: تبسيط<br>x = 5<br>التحقق: 2 × 5 + 1 = 11 ✓"
                 }
             ]
         },
@@ -760,29 +802,29 @@ const extendedExercises = {
         "حساب المساحة": {
             exercises: [
                 {
-                    question: "مستطيل طوله 8 سم وعرضه 5 سم. ما هي مساحته؟",
-                    options: ["40 سم²", "26 سم²", "13 سم²", "64 سم²"],
-                    answer: "40 سم²"
+                    question: "مستطيل طوله <span dir='ltr'>cm</span> 8 وعرضه <span dir='ltr'>cm</span> 5. ما هي مساحته؟",
+                    options: ["<span dir='ltr'>cm²</span> 40", "<span dir='ltr'>cm²</span> 26", "<span dir='ltr'>cm²</span> 13", "<span dir='ltr'>cm²</span> 64"],
+                    answer: "<span dir='ltr'>cm²</span> 40"
                 },
                 {
-                    question: "مربع طول ضلعه 6 سم. ما هي مساحته؟",
-                    options: ["24 سم²", "36 سم²", "12 سم²", "60 سم²"],
-                    answer: "36 سم²"
+                    question: "مربع طول ضلعه <span dir='ltr'>cm</span> 6. ما هي مساحته؟",
+                    options: ["<span dir='ltr'>cm²</span> 24", "<span dir='ltr'>cm²</span> 36", "<span dir='ltr'>cm²</span> 12", "<span dir='ltr'>cm²</span> 60"],
+                    answer: "<span dir='ltr'>cm²</span> 36"
                 },
                 {
-                    question: "مثلث قائم طول قاعدته 10 سم وارتفاعه 4 سم. ما هي مساحته؟",
-                    options: ["40 سم²", "14 سم²", "20 سم²", "28 سم²"],
-                    answer: "20 سم²"
+                    question: "مثلث قائم طول قاعدته <span dir='ltr'>cm</span> 10 وارتفاعه <span dir='ltr'>cm</span> 4. ما هي مساحته؟",
+                    options: ["<span dir='ltr'>cm²</span> 40", "<span dir='ltr'>cm²</span> 14", "<span dir='ltr'>cm²</span> 20", "<span dir='ltr'>cm²</span> 28"],
+                    answer: "<span dir='ltr'>cm²</span> 20"
                 },
                 {
-                    question: "متوازي أضلاع طول قاعدته 7 سم والارتفاع المتعلق بها 3 سم. ما هي مساحته؟",
-                    options: ["21 سم²", "10 سم²", "20 سم²", "42 سم²"],
-                    answer: "21 سم²"
+                    question: "متوازي أضلاع طول قاعدته <span dir='ltr'>cm</span> 7 والارتفاع المتعلق بها <span dir='ltr'>cm</span> 3. ما هي مساحته؟",
+                    options: ["<span dir='ltr'>cm²</span> 21", "<span dir='ltr'>cm²</span> 10", "<span dir='ltr'>cm²</span> 20", "<span dir='ltr'>cm²</span> 42"],
+                    answer: "<span dir='ltr'>cm²</span> 21"
                 },
                 {
-                    question: "قرص نصف قطره 10 سم. أحسب مساحته (نأخذ π ≈ 3.14).",
-                    options: ["31.4 سم²", "62.8 سم²", "314 سم²", "100 سم²"],
-                    answer: "314 سم²"
+                    question: "قرص نصف قطره <span dir='ltr'>cm</span> 10. أحسب مساحته (نأخذ π ≈ 3.14).",
+                    options: ["<span dir='ltr'>cm²</span> 31.4", "<span dir='ltr'>cm²</span> 62.8", "<span dir='ltr'>cm²</span> 314", "<span dir='ltr'>cm²</span> 100"],
+                    answer: "<span dir='ltr'>cm²</span> 314"
                 }
             ]
         },
@@ -823,9 +865,9 @@ const extendedExercises = {
                     answer: "75%"
                 },
                 {
-                    question: "سعر سلعة 500 دينار، تم تخفيضها بنسبة 20%. ما هو مبلغ التخفيض؟",
-                    options: ["20 دينار", "50 دينار", "100 دينار", "400 دينار"],
-                    answer: "100 دينار"
+                    question: "سعر سلعة <span dir='ltr'>DA</span> 500، تم تخفيضها بنسبة 20%. ما هو مبلغ التخفيض؟",
+                    options: ["<span dir='ltr'>DA</span> 20", "<span dir='ltr'>DA</span> 50", "<span dir='ltr'>DA</span> 100", "<span dir='ltr'>DA</span> 400"],
+                    answer: "<span dir='ltr'>DA</span> 100"
                 },
                 {
                     question: "كيف نكتب النسبة المئوية 25% على شكل كسر؟",
@@ -834,11 +876,11 @@ const extendedExercises = {
                 },
                 {
                     question: "أخذ نسبة مئوية p% من عدد x يعني ضرب العدد x في...",
-                    options: ["p", "100/p", "p/100", "x*p"],
+                    options: ["p", "p/100", "100/p", "100*p"],
                     answer: "p/100"
                 },
                 {
-                    question: "زاد سعر منتج من 200 دينار إلى 250 دينار. ما هي النسبة المئوية للزيادة؟",
+                    question: "زاد سعر منتج من <span dir='ltr'>DA</span> 200 إلى <span dir='ltr'>DA</span> 250. ما هي النسبة المئوية للزيادة؟",
                     options: ["50%", "20%", "25%", "125%"],
                     answer: "25%"
                 }
@@ -847,24 +889,24 @@ const extendedExercises = {
         "المقياس وتحويل الوحدات": {
             exercises: [
                 {
-                    question: "على خريطة مقياسها 1/50000، المسافة بين مدينتين هي 4 سم. ما هي المسافة الحقيقية بالكيلومتر؟",
-                    options: ["2 كم", "20 كم", "200 كم", "0.2 كم"],
-                    answer: "2 كم"
+                    question: "على خريطة مقياسها 1/50000، المسافة بين مدينتين هي <span dir='ltr'>cm</span> 4. ما هي المسافة الحقيقية بالكيلومتر؟",
+                    options: ["<span dir='ltr'>km</span> 2", "<span dir='ltr'>km</span> 20", "<span dir='ltr'>km</span> 200", "<span dir='ltr'>km</span> 0.2"],
+                    answer: "<span dir='ltr'>km</span> 2"
                 },
                 {
-                    question: "لتحويل 2.5 كيلومتر إلى متر، نضرب في...",
+                    question: "لتحويل <span dir='ltr'>km</span> 2.5 إلى <span dir='ltr'>m</span>، نضرب في...",
                     options: ["10", "100", "1000", "0.1"],
                     answer: "1000"
                 },
                 {
-                    question: "المسافة الحقيقية بين نقطتين هي 50 مترًا. تم تمثيلها على تصميم بـ 5 سم. ما هو مقياس هذا التصميم؟",
+                    question: "المسافة الحقيقية بين نقطتين هي <span dir='ltr'>m</span> 50. تم تمثيلها على تصميم بـ <span dir='ltr'>cm</span> 5. ما هو مقياس هذا التصميم؟",
                     options: ["1/10", "1/100", "1/1000", "1/50"],
                     answer: "1/1000"
                 },
                 {
-                    question: "كم يساوي 3500 جرام بالكيلوجرام؟",
-                    options: ["350 كجم", "35 كجم", "3.5 كجم", "0.35 كجم"],
-                    answer: "3.5 كجم"
+                    question: "كم يساوي <span dir='ltr'>g</span> 3500 بالكيلوجرام؟",
+                    options: ["<span dir='ltr'>kg</span> 350", "<span dir='ltr'>kg</span> 35", "<span dir='ltr'>kg</span> 3.5", "<span dir='ltr'>kg</span> 0.35"],
+                    answer: "<span dir='ltr'>kg</span> 3.5"
                 },
                 {
                     question: "إذا كان المقياس أكبر من 1، فإنه يمثل...",
@@ -878,54 +920,39 @@ const extendedExercises = {
         "العمليات على الأعداد النسبية": {
             exercises: [
                 {
-                    "question": "ما هو ناتج العملية <code style='font-family: monospace, monospace; direction: ltr;'>(-5) + (+3) * (-2)</code>؟",
-                    "options": [
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>+4</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-11</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-1</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>+16</code>"
-                    ],
-                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>-11</code>"
+                    "question": "أحسب العبارة التالية:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">A = (-5) + (+3) × (-2) = ?</div>",
+                    "options": ["4+", "11-", "1-", "16+"],
+                    "answer": "11-"
                 },
                 {
-                    "question": "أحسب قيمة العبارة <code style='font-family: monospace, monospace; direction: ltr;'>(-10) / (-2) - (+7)</code>.",
-                    "options": [
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-2</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>+12</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-12</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>+2</code>"
-                    ],
-                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>-2</code>"
+                    "question": "أحسب العبارة التالية:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">A = (-10) ÷ (-2) - (+7) = ?</div>",
+                    "options": ["2-", "12+", "12-", "2+"],
+                    "answer": "2-"
                 },
                 {
-                    "question": "ما هي نتيجة <code style='font-family: monospace, monospace; direction: ltr;'>(+8) - (-4) + (-5)</code>؟",
-                    "options": [
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-1</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>+7</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>+17</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-7</code>"
-                    ],
-                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>+7</code>"
+                    "question": "أحسب العبارة التالية:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">A = (+8) - (-4) + (-5) = ?</div>",
+                    "options": ["1-", "7+", "17+", "7-"],
+                    "answer": "7+"
                 },
                 {
                     "question": "إذا كانت <code style='font-family: monospace, monospace; direction: ltr;'>a = -3</code> و <code style='font-family: monospace, monospace; direction: ltr;'>b = +2</code>، فما هي قيمة <code style='font-family: monospace, monospace; direction: ltr;'>a * b - a</code>؟",
                     "options": [
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-9</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-3</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>+3</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>+9</code>"
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>9-</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>3-</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>3+</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>9+</code>"
                     ],
-                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>-3</code>"
+                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>3-</code>"
                 },
                 {
-                    "question": "ما هو مقلوب العدد <code style='font-family: monospace, monospace; direction: ltr;'>-1/5</code>؟",
+                    "question": "ما هو مقلوب العدد <code style='font-family: monospace, monospace; direction: ltr;'>1/5-</code>؟",
                     "options": [
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>+5</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>+1/5</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-5</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-0.2</code>"
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>5+</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>1/5+</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>5-</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>0.2-</code>"
                     ],
-                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>-5</code>"
+                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>5-</code>"
                 }
             ]
         },
@@ -952,27 +979,27 @@ const extendedExercises = {
                     "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>11/15</code>"
                 },
                 {
-                    "question": "أحسب جداء <code style='font-family: monospace, monospace; direction: ltr;'>(-3/4) * (8/9)</code>.",
+                    "question": "أحسب جداء <code style='font-family: monospace, monospace; direction: ltr;'>(3/4-) * (8/9)</code>.",
                     "options": [
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-2/3</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-27/32</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>+2/3</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-1/2</code>"
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>2/3-</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>27/32-</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>2/3+</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>1/2-</code>"
                     ],
-                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>-2/3</code>"
+                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>2/3-</code>"
                 },
                 {
-                    "question": "قارن بين العددين <code style='font-family: monospace, monospace; direction: ltr;'>-2/3</code> و <code style='font-family: monospace, monospace; direction: ltr;'>-3/4</code>.",
+                    "question": "قارن بين العددين <code style='font-family: monospace, monospace; direction: ltr;'>2/3-</code> و <code style='font-family: monospace, monospace; direction: ltr;'>3/4-</code>.",
                     "options": [
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-2/3 > -3/4</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-2/3 < -3/4</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-2/3 = -3/4</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>2/3- > 3/4-</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>2/3- < 3/4-</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>2/3- = 3/4-</code>",
                         "لا يمكن المقارنة"
                     ],
-                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>-2/3 > -3/4</code>"
+                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>2/3- > 3/4-</code>"
                 },
                 {
-                    "question": "ما هو ناتج قسمة <code style='font-family: monospace, monospace; direction: ltr;'>(5/6) / (2/3)</code>؟",
+                    "question": "ما هو ناتج قسمة:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">(5/6) / (2/3) = ?</div>",
                     "options": [
                         "<code style='font-family: monospace, monospace; direction: ltr;'>5/9</code>",
                         "<code style='font-family: monospace, monospace; direction: ltr;'>5/4</code>",
@@ -986,17 +1013,17 @@ const extendedExercises = {
         "القوى ذات الأسس الصحيحة النسبية": {
             exercises: [
                 {
-                    "question": "ما هي قيمة <code style='font-family: monospace, monospace; direction: ltr;'>10<sup>-3</sup></code>؟",
+                    "question": "ما هي قيمة:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\"><span dir='ltr'>10<sup>-3</sup></span> = ?</div>",
                     "options": [
                         "<code style='font-family: monospace, monospace; direction: ltr;'>1000</code>",
                         "<code style='font-family: monospace, monospace; direction: ltr;'>0.001</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>-30</code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'>30-</code>",
                         "<code style='font-family: monospace, monospace; direction: ltr;'>0.01</code>"
                     ],
                     "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>0.001</code>"
                 },
                 {
-                    "question": "بسّط العبارة <code style='font-family: monospace, monospace; direction: ltr;'>5<sup>4</sup> * 5<sup>-2</sup></code>.",
+                    "question": "بسّط العبارة:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">5<sup>4</sup> * 5<sup>-2</sup> = ?</div>",
                     "options": [
                         "<code style='font-family: monospace, monospace; direction: ltr;'>5<sup>-8</sup></code>",
                         "<code style='font-family: monospace, monospace; direction: ltr;'>5<sup>6</sup></code>",
@@ -1006,17 +1033,17 @@ const extendedExercises = {
                     "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>5<sup>2</sup></code>"
                 },
                 {
-                    "question": "ما هي الكتابة العلمية للعدد <code style='font-family: monospace, monospace; direction: ltr;'>0.00078</code>؟",
+                    "question": "ما هي الكتابة العلمية للعدد:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">0.00078 = ?</div>",
                     "options": [
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>7.8 * 10<sup>4</sup></code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>7.8 * 10<sup>-4</sup></code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>78 * 10<sup>-5</sup></code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>0.78 * 10<sup>-3</sup></code>"
+                        "<code style='font-family: monospace, monospace; direction: ltr;'><span dir='ltr'>7.8 * 10<sup>4</sup></span></code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'><span dir='ltr'>7.8 * 10<sup>-4</sup></span></code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'><span dir='ltr'>78 * 10<sup>-5</sup></span></code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'><span dir='ltr'>0.78 * 10<sup>-3</sup></span></code>"
                     ],
-                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>7.8 * 10<sup>-4</sup></code>"
+                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'><span dir='ltr'>7.8 * 10<sup>-4</sup></span></code>"
                 },
                 {
-                    "question": "أحسب <code style='font-family: monospace, monospace; direction: ltr;'>(2<sup>3</sup>)<sup>2</sup></code>.",
+                    "question": "أحسب:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">(2<sup>3</sup>)<sup>2</sup> = ?</div>",
                     "options": [
                         "<code style='font-family: monospace, monospace; direction: ltr;'>2<sup>5</sup></code>",
                         "<code style='font-family: monospace, monospace; direction: ltr;'>2<sup>9</sup></code>",
@@ -1026,21 +1053,21 @@ const extendedExercises = {
                     "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>2<sup>6</sup></code>"
                 },
                 {
-                    "question": "ما هي رتبة قدر العدد <code style='font-family: monospace, monospace; direction: ltr;'>5.1 * 10<sup>8</sup></code>؟",
+                    "question": "ما هي رتبة قدر العدد:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\"><span dir='ltr'>5.1 * 10<sup>8</sup></span> = ?</div>",
                     "options": [
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>5 * 10<sup>8</sup></code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>10<sup>8</sup></code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>5 * 10<sup>9</sup></code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>10<sup>9</sup></code>"
+                        "<code style='font-family: monospace, monospace; direction: ltr;'><span dir='ltr'>5 * 10<sup>8</sup></span></code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'><span dir='ltr'>10<sup>8</sup></span></code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'><span dir='ltr'>5 * 10<sup>9</sup></span></code>",
+                        "<code style='font-family: monospace, monospace; direction: ltr;'><span dir='ltr'>10<sup>9</sup></span></code>"
                     ],
-                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>5 * 10<sup>8</sup></code>"
+                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'><span dir='ltr'>5 * 10<sup>8</sup></span></code>"
                 }
             ]
         },
         "الحساب الحرفي": {
             exercises: [
                 {
-                    "question": "انشر وبسّط العبارة <code style='font-family: monospace, monospace; direction: ltr;'>3(x + 5) - 2x</code>.",
+                    "question": "انشر وبسّط العبارة:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">3(x + 5) - 2x = ?</div>",
                     "options": [
                         "<code style='font-family: monospace, monospace; direction: ltr;'>x + 15</code>",
                         "<code style='font-family: monospace, monospace; direction: ltr;'>5x + 5</code>",
@@ -1070,7 +1097,7 @@ const extendedExercises = {
                     "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>x = 3</code>"
                 },
                 {
-                    "question": "اختبر صحة المساواة <code style='font-family: monospace, monospace; direction: ltr;'>2(y + 3) = 10</code> من أجل <code style='font-family: monospace, monospace; direction: ltr;'>y = 2</code>.",
+                    "question": "اختبر صحة المساواة من أجل y = 2:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">2(y + 3) = 10</div>",
                     "options": [
                         "المساواة صحيحة",
                         "المساواة خاطئة",
@@ -1094,14 +1121,14 @@ const extendedExercises = {
         "مبرهنة فيثاغورس": {
             exercises: [
                 {
-                    "question": "في مثلث قائم، طولا الضلعين القائمين 6 سم و 8 سم. ما هو طول الوتر؟",
+                    "question": "في مثلث قائم، طولا الضلعين القائمين <span dir='ltr'>cm</span> 6 و <span dir='ltr'>cm</span> 8. ما هو طول الوتر؟",
                     "options": [
-                        "14 سم",
-                        "100 سم",
-                        "10 سم",
-                        "48 سم"
+                        "<span dir='ltr'>cm</span> 14",
+                        "<span dir='ltr'>cm</span> 100",
+                        "<span dir='ltr'>cm</span> 10",
+                        "<span dir='ltr'>cm</span> 48"
                     ],
-                    "answer": "10 سم"
+                    "answer": "<span dir='ltr'>cm</span> 10"
                 },
                 {
                     "question": "مثلث ABC قائم في A، حيث <code style='font-family: monospace, monospace; direction: ltr;'>AB = 5</code> و <code style='font-family: monospace, monospace; direction: ltr;'>BC = 13</code>. ما هو طول <code style='font-family: monospace, monospace; direction: ltr;'>AC</code>؟",
@@ -1151,7 +1178,7 @@ const extendedExercises = {
                     "question": "ما هي الخاصية التي يتميز بها المثلث المحاط بدائرة قطرها أحد أضلاعه؟",
                     "options": [
                         "متساوي الساقين",
-                        "متساوي الأضلاع",
+                        "متقايس الأضلاع",
                         "قائم",
                         "كيفي"
                     ],
@@ -1172,13 +1199,13 @@ const extendedExercises = {
                     "options": [
                         "قائم",
                         "متساوي الساقين",
-                        "متساوي الأضلاع",
+                        "متقايس الأضلاع",
                         "لا يمكن الجزم"
                     ],
                     "answer": "قائم"
                 },
                 {
-                    "question": "ما هو المستقيم الذي يشمل ضلعاً ويكون عمودياً على حامل الضلع الآخر في المثلث؟",
+                    "question": "ما هو المستقيم الذي يشمل رأساً ويكون عمودياً على حامل الضلع المقابل له في المثلث؟",
                     "options": [
                         "المتوسط",
                         "المنصف",
@@ -1209,7 +1236,7 @@ const extendedExercises = {
                         "نقطة D بحيث يكون الرباعي ACBD متوازي أضلاع",
                         "نقطة B نفسها"
                     ],
-                    "answer": "نقطة D بحيث يكون الرباعي ABDC متوازي أضلاع"
+                    "answer": "نقطة D بحيث يكون الرباعي ABCD متوازي أضلاع"
                 },
                 {
                     "question": "صورة مستقيم بانسحاب هو...",
@@ -1232,24 +1259,24 @@ const extendedExercises = {
                     "answer": "الأطوال والزوايا والمساحات والاستقامية"
                 },
                 {
-                    "question": "إذا كانت C صورة B بالانسحاب الذي شعاعه <code style='font-family: monospace, monospace; direction: ltr;'>vec(u)</code>، فإن...",
+                    "question": "ما هي خصائص الانسحاب؟",
                     "options": [
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>vec(BC) = vec(u)</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>vec(CB) = vec(u)</code>",
-                        "<code style='font-family: monospace, monospace; direction: ltr;'>vec(u) = vec(0)</code>",
-                        "B=C"
+                        "يحافظ على الأطوال والزوايا",
+                        "يحافظ على الأطوال فقط",
+                        "يحافظ على الزوايا فقط",
+                        "لا يحافظ على أي شيء"
                     ],
-                    "answer": "<code style='font-family: monospace, monospace; direction: ltr;'>vec(BC) = vec(u)</code>"
+                    "answer": "يحافظ على الأطوال والزوايا"
                 },
                 {
-                    "question": "صورة دائرة نصف قطرها 5 سم بانسحاب هي...",
+                    "question": "صورة دائرة نصف قطرها <span dir='ltr'>cm</span> 5 بانسحاب هي...",
                     "options": [
-                        "دائرة نصف قطرها 10 سم",
-                        "دائرة نصف قطرها 5 سم",
+                        "دائرة نصف قطرها <span dir='ltr'>cm</span> 10",
+                        "دائرة نصف قطرها <span dir='ltr'>cm</span> 5",
                         "نقطة",
-                        "قطعة مستقيمة طولها 5 سم"
+                        "قطعة مستقيمة طولها <span dir='ltr'>cm</span> 5"
                     ],
-                    "answer": "دائرة نصف قطرها 5 سم"
+                    "answer": "دائرة نصف قطرها <span dir='ltr'>cm</span> 5"
                 }
             ]
         },
@@ -1271,33 +1298,33 @@ const extendedExercises = {
                     "answer": "مخروط الدوران"
                 },
                 {
-                    "question": "هرم قاعدته مربع طول ضلعه 3 cm وارتفاعه 10 cm. ما هو حجمه؟",
-                    "options": ["30 cm³", "90 cm³", "15 cm³", "45 cm³"],
-                    "answer": "30 cm³"
+                    "question": "هرم قاعدته مربع طول ضلعه <span dir='ltr'>cm</span> 3 وارتفاعه <span dir='ltr'>cm</span> 10. ما هو حجمه؟",
+                    "options": ["<span dir='ltr'>cm³</span> 30", "<span dir='ltr'>cm³</span> 90", "<span dir='ltr'>cm³</span> 15", "<span dir='ltr'>cm³</span> 45"],
+                    "answer": "<span dir='ltr'>cm³</span> 30"
                 },
                 {
-                    "question": "مخروط دوران نصف قطر قاعدته 5 cm وارتفاعه 12 cm. ما هو طول مولده؟ (استخدم خاصية فيتاغورس)",
-                    "options": ["13 cm", "17 cm", "7 cm", "10 cm"],
-                    "answer": "13 cm"
+                    "question": "مخروط دوران نصف قطر قاعدته <span dir='ltr'>cm</span> 5 وارتفاعه <span dir='ltr'>cm</span> 12. ما هو طول مولده؟ (استخدم خاصية فيتاغورس)",
+                    "options": ["<span dir='ltr'>cm</span> 13", "<span dir='ltr'>cm</span> 17", "<span dir='ltr'>cm</span> 7", "<span dir='ltr'>cm</span> 10"],
+                    "answer": "<span dir='ltr'>cm</span> 13"
                 }
             ]
         },
         "نظرية فيثاغورس": {
             exercises: [
                 {
-                    "question": "في مثلث قائم، إذا كان طول الوتر 10 cm وأحد الضلعين القائمين 6 cm، فما طول الضلع القائم الآخر؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">a² + 6² = 10²</div>",
-                    "options": ["8 cm", "7 cm", "9 cm", "4 cm"],
-                    "answer": "8 cm"
+                    "question": "في مثلث قائم، إذا كان طول الوتر <span dir='ltr'>cm</span> 10 وأحد الضلعين القائمين <span dir='ltr'>cm</span> 6، فما طول الضلع القائم الآخر؟<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">a² + 6² = 10²</div>",
+                    "options": ["<span dir='ltr'>cm</span> 8", "<span dir='ltr'>cm</span> 7", "<span dir='ltr'>cm</span> 9", "<span dir='ltr'>cm</span> 4"],
+                    "answer": "<span dir='ltr'>cm</span> 8"
                 },
                 {
-                    "question": "مثلث أطوال أضلاعه 5 cm, 12 cm, 13 cm. هل هو مثلث قائم؟",
+                    "question": "مثلث أطوال أضلاعه <span dir='ltr'>cm</span> 5, <span dir='ltr'>cm</span> 12, <span dir='ltr'>cm</span> 13. هل هو مثلث قائم؟",
                     "options": ["نعم", "لا", "لا يمكن التحديد"],
                     "answer": "نعم"
                 },
                 {
-                    "question": "في مثلث ABC قائم في A، إذا كان AB = 3 cm و AC = 4 cm، فما هو طول الوتر BC؟",
-                    "options": ["5 cm", "6 cm", "7 cm", "25 cm"],
-                    "answer": "5 cm"
+                    "question": "في مثلث ABC قائم في A، إذا كان AB = <span dir='ltr'>cm</span> 3 و AC = <span dir='ltr'>cm</span> 4، فما هو طول الوتر BC؟",
+                    "options": ["<span dir='ltr'>cm</span> 5", "<span dir='ltr'>cm</span> 6", "<span dir='ltr'>cm</span> 7", "<span dir='ltr'>cm</span> 25"],
+                    "answer": "<span dir='ltr'>cm</span> 5"
                 },
                 {
                     "question": "ما هي الخاصية العكسية لخاصية فيتاغورس؟",
@@ -1306,62 +1333,8 @@ const extendedExercises = {
                 },
                 {
                     "question": "إذا كان مربع طول الوتر في مثلث يساوي مجموع مربعي طولي الضلعين الآخرين، فإن المثلث...",
-                    "options": ["قائم", "متساوي الساقين", "متساوي الأضلاع", "كيفي"],
+                    "options": ["قائم", "متساوي الساقين", "متقايس الأضلاع", "كيفي"],
                     "answer": "قائم"
-                }
-            ]
-        },
-        "خاصية الدائرة المحيطة بالمثلث القائم": {
-            exercises: [
-                {
-                    "question": "ما هي الخاصية التي يتميز بها المثلث المحاط بدائرة قطرها أحد أضلاعه؟",
-                    "options": [
-                        "متساوي الساقين",
-                        "متساوي الأضلاع",
-                        "قائم",
-                        "كيفي"
-                    ],
-                    "answer": "قائم"
-                },
-                {
-                    "question": "ما هو مركز الدائرة المحيطة بمثلث قائم؟",
-                    "options": [
-                        "رأس الزاوية القائمة",
-                        "نقطة تلاقي المتوسطات",
-                        "منتصف الوتر",
-                        "نقطة تلاقي المنصفات"
-                    ],
-                    "answer": "منتصف الوتر"
-                },
-                {
-                    "question": "إذا كان طول متوسط متعلق بأحد أضلاع مثلث يساوي نصف طول هذا الضلع، فإن المثلث...",
-                    "options": [
-                        "قائم",
-                        "متساوي الساقين",
-                        "متساوي الأضلاع",
-                        "لا يمكن الجزم"
-                    ],
-                    "answer": "قائم"
-                },
-                {
-                    "question": "ما هو المستقيم الذي يشمل ضلعاً ويكون عمودياً على حامل الضلع الآخر في المثلث؟",
-                    "options": [
-                        "المتوسط",
-                        "المنصف",
-                        "المحور",
-                        "الارتفاع"
-                    ],
-                    "answer": "الارتفاع"
-                },
-                {
-                    "question": "نقطة تلاقي محاور أضلاع المثلث هي...",
-                    "options": [
-                        "مركز الدائرة المحيطة بالمثلث",
-                        "مركز الدائرة المرسومة داخل المثلث",
-                        "مركز ثقل المثلث",
-                        "لا تمثل أي شيء"
-                    ],
-                    "answer": "مركز الدائرة المحيطة بالمثلث"
                 }
             ]
         },
@@ -1373,7 +1346,7 @@ const extendedExercises = {
                     "answer": "طول الضلع المجاور / طول الوتر"
                 },
                 {
-                    "question": "في مثلث ABC قائم في A، إذا كان AB = 4 cm والوتر BC = 5 cm، فما هو cos(B)؟",
+                    "question": "في مثلث ABC قائم في A، ما هو cos(B)؟<br><span dir='ltr'>AB = 4 cm، BC = 5 cm</span>",
                     "options": ["0,8", "0,6", "1,25", "0,75"],
                     "answer": "0,8"
                 },
@@ -1397,7 +1370,7 @@ const extendedExercises = {
         "تبسيط ونشر العبارات الجبرية": {
             exercises: [
                 {
-                    question: "أنشر وبسط العبارة: 3(2x - 1) + 5x",
+                    question: "أنشر وبسط العبارة:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">3(2x - 1) + 5x</div>",
                     options: ["11x - 3", "x - 3", "11x + 1", "6x - 3"],
                     answer: "11x - 3"
                 },
@@ -1427,23 +1400,23 @@ const extendedExercises = {
             exercises: [
                 {
                     question: "إذا كان x > 3، فأي من التالي صحيح؟",
-                    options: ["x + 2 > 5", "x - 1 < 2", "2x < 6", "-x > -3"],
+                    options: ["x + 2 > 5", "x - 1 < 2", "2x < 6", "<div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">-x > -3</div>"],
                     answer: "x + 2 > 5"
                 },
                 {
-                    question: "إذا كان a < b، فإن -2a ... -2b",
+                    question: "إذا كان a < b، فإن<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">-2a ... -2b</div>",
                     options: [">", "<", "=", "≥"],
-                    answer: ">"
+                    answer: "<"
                 },
                 {
-                    question: "حل المتراجحة 2x + 1 ≤ 7 هو:",
-                    options: ["x ≤ 3", "x ≥ 3", "x ≤ 4", "x ≥ 4"],
-                    answer: "x ≤ 3"
+                    question: "إذا كان 7 > 5، فأي من التالي صحيح؟",
+                    options: ["7 + 2 > 5 + 2", "7 - 3 < 5 - 3", "7 × 0 > 5 × 0", "7 ÷ 2 < 5 ÷ 2"],
+                    answer: "7 + 2 > 5 + 2"
                 },
                 {
-                    question: "أي عدد من الأعداد التالية هو حل للمتراجحة 5 - y > 2؟",
-                    options: ["1", "3", "4", "5"],
-                    answer: "1"
+                    question: "إذا كان a > b و b > c، فإن...",
+                    options: ["a > c", "a < c", "a = c", "لا يمكن تحديد العلاقة"],
+                    answer: "a > c"
                 },
                 {
                     question: "عند ضرب طرفي متباينة في عدد سالب، فإننا...",
@@ -1456,7 +1429,7 @@ const extendedExercises = {
             exercises: [
                 {
                     question: "ما هو حل المعادلة 3x - 5 = 10؟",
-                    options: ["x = 5", "x = -5", "x = 15", "x = 3/5"],
+                    options: ["x = 5", "x = 5-", "x = 15", "x = 3/5"],
                     answer: "x = 5"
                 },
                 {
@@ -1465,17 +1438,17 @@ const extendedExercises = {
                     answer: "y = 8"
                 },
                 {
-                    question: "حل المعادلة 2(a + 3) = 14 هو:",
+                    question: "حل المعادلة <div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">2(a + 3) = 14</div> هو:",
                     options: ["a = 4", "a = 5", "a = 8", "a = 11"],
                     answer: "a = 4"
                 },
                 {
                     question: "حل المعادلة التالية:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">7-2z=1</div>فما هي قيمة z؟",
-                    options: ["z = 3", "z = -3", "z = 4", "z = -4"],
+                    options: ["z = 3", "z = 3-", "z = 4", "z = 4-"],
                     answer: "z = 3"
                 },
                 {
-                    question: "المعادلة 5x = 2x + 9 تكافئ...",
+                    question: "المعادلة <div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">5x = 2x + 9</div> تكافئ...",
                     options: ["3x = 9", "7x = 9", "3x = -9", "-3x = 9"],
                     answer: "3x = 9"
                 }
@@ -1525,7 +1498,7 @@ const extendedExercises = {
                     answer: "1"
                 },
                 {
-                    "question": "PGCD(15, 7) = ?",
+                    "question": "? = PGCD(15, 7)",
                     options: ["1", "7", "15", "105"],
                     answer: "1"
                 },
@@ -1535,7 +1508,7 @@ const extendedExercises = {
                     answer: "(8, 9)"
                 },
                 {
-                    "question": "إذا كان a من قواسم b، فإن PGCD(a, b) = ?",
+                    "question": "إذا كان a من قواسم b، فإن ? = PGCD(a, b)",
                     options: ["a", "b", "a*b", "1"],
                     answer: "a"
                 }
@@ -1602,28 +1575,28 @@ const extendedExercises = {
         "قواعد الحساب على الجذور": {
             exercises: [
                 {
-                    "question": "ما هو تبسيط &radic;18؟",
-                    options: ["2&radic;3", "3&radic;2", "9&radic;2", "6&radic;3"],
-                    answer: "3&radic;2"
+                    "question": "ما هو تبسيط 18&radic;؟",
+                    options: ["<span dir=\"ltr\">2√3</span>", "<span dir=\"ltr\">3√2</span>", "<span dir=\"ltr\">9√2</span>", "<span dir=\"ltr\">6√3</span>"],
+                    answer: "<span dir=\"ltr\">3√2</span>"
                 },
                 {
-                    "question": "ناتج &radic;5 * &radic;20 هو:",
-                    options: ["&radic;25", "&radic;100", "25", "100"],
-                    answer: "&radic;100"
+                    "question": "ناتج 5&radic; * 20&radic; هو:",
+                    options: ["25&radic;", "100&radic;", "25", "100"],
+                    answer: "100&radic;"
                 },
                 {
-                    "question": "بسط العبارة &radic;75 - &radic;27.",
-                    options: ["&radic;48", "2&radic;3", "&radic;12", "3&radic;2"],
-                    answer: "2&radic;3"
+                    "question": "بسط العبارة<br><span dir=\"ltr\">√75 - √27</span>.",
+                    options: ["<span dir=\"ltr\">√48</span>", "<span dir=\"ltr\">2√3</span>", "<span dir=\"ltr\">√12</span>", "<span dir=\"ltr\">3√2</span>"],
+                    answer: "<span dir=\"ltr\">2√3</span>"
                 },
                 {
-                    "question": "لكتابة كسر مقامه عدد ناطق، نضرب البسط والمقام في...",
-                    "options": ["مربع المقام", "مقلوب المقام", "الجذر التربيعي للمقام", "مرافق المقام"],
-                    answer: "الجذر التربيعي للمقام"
+                    "question": "لكتابة الكسر التالي على شكل كسر مقامه عدد ناطق:<br><span dir=\"ltr\">a/√3</span><br>نضرب البسط والمقام في",
+                    "options": ["<span dir=\"ltr\">√3</span>", "<span dir=\"ltr\">3</span>", "<span dir=\"ltr\">3√3</span>", "<span dir=\"ltr\">1/√3</span>"],
+                    answer: "<span dir=\"ltr\">√3</span>"
                 },
                 {
-                    "question": "ما هي قيمة (&radic;7)²؟",
-                    options: ["49", "14", "7", "&radic;14"],
+                    "question": "ما هي قيمة<br><span dir=\"ltr\">(√7)²</span>؟",
+                    options: ["49", "14", "7", "<span dir=\"ltr\">√14</span>"],
                     answer: "7"
                 }
             ]
@@ -1705,13 +1678,13 @@ const extendedExercises = {
                 },
                 {
                     "question": "حلل العبارة التالية إلى جداء عاملين:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">x² - 49 = ?</div>",
-                    options: ["(x - 7)(x + 7)", "(x - 7)²", "(x + 7)²", "(x - 49)(x + 49)"],
+                    options: ["(x - 7)(x + 7)", "<span dir=\"ltr\">(x - 7)²</span>", "<span dir=\"ltr\">(x + 7)²</span>", "(x - 49)(x + 49)"],
                     answer: "(x - 7)(x + 7)"
                 },
                 {
                     "question": "حلل العبارة التالية:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">9z² + 12z + 4 = ?</div>",
-                    options: ["(3z + 2)²", "(3z - 2)²", "(9z + 2)²", "(3z + 4)²"],
-                    answer: "(3z + 2)²"
+                    options: ["<span dir=\"ltr\">(3z + 2)²</span>", "<span dir=\"ltr\">(3z - 2)²</span>", "<span dir=\"ltr\">(9z + 2)²</span>", "<span dir=\"ltr\">(3z + 4)²</span>"],
+                    answer: "<span dir=\"ltr\">(3z + 2)²</span>"
                 }
             ]
         },
@@ -1728,19 +1701,20 @@ const extendedExercises = {
                     answer: "5(a - 2b)"
                 },
                 {
-                    "question": "حلل العبارة (x+1)² - (x+1)(2x-3)؟",
-                    options: ["(x+1)(-x+4)", "(x+1)(3x-2)", "-x+4", "(x+1)(x-4)"],
-                    answer: "(x+1)(-x+4)"
+                    "question": "حلل العبارة<br><span dir=\"ltr\">(x+1)² - (x+1)(2x-3)</span>؟",
+                    options: ["<span dir=\"ltr\">(x+1)(-x+4)</span>", "<span dir=\"ltr\">(x+1)(3x-2)</span>", "<span dir=\"ltr\">-x+4</span>", "<span dir=\"ltr\">(x+1)(x-4)</span>"],
+                    answer: "<span dir=\"ltr\">(x+1)(-x+4)</span>"
                 },
                 {
                     "question": "استخدم المتطابقات الشهيرة لتحليل x² - 16.",
-                    options: ["(x-4)(x+4)", "(x-4)²", "(x+4)²", "(x-16)(x+16)"],
+                    options: ["(x-4)(x+4)", "<span dir=\"ltr\">(x-4)²</span>", "<span dir=\"ltr\">(x+4)²</span>", "(x-16)(x+16)"],
                     answer: "(x-4)(x+4)"
                 },
                 {
                     "question": "تحليل العبارة 4y² + 12y + 9 هو:",
-                    options: ["(2y+3)²", "(2y-3)²", "(4y+3)(y+3)", "(2y+9)(2y+1)"],
-                    answer: "(2y+3)²"
+                    options: ["<span dir=\"ltr\">(2y+3)²</span>", "<span dir=\"ltr\">(2y-3)²</span>", "<span dir=\"ltr\">(4y+3)(y+3)</span>", "<span dir=\"ltr\">(2y+9)(2y+1)</span>"],
+                    answer: "<span dir=\"ltr\">(2y+3)²</span>",
+                    solution: "4y² + 12y + 9 = (2y)² + 2(2y)(3) + 3² = <span dir=\"ltr\">(2y+3)²</span>"
                 }
             ]
         },
@@ -1748,28 +1722,28 @@ const extendedExercises = {
             exercises: [
                 {
                     "question": "ما هي حلول المعادلة x² = 49؟",
-                    options: ["7", "-7", "7 و -7", "لا توجد حلول"],
-                    answer: "7 و -7"
+                    options: ["7", "7-", "7 و 7-", "لا توجد حلول"],
+                    answer: "7 و 7-"
                 },
                 {
                     "question": "حلول المعادلة y² = -9 هي:",
-                    "options": ["3", "-3", "3 و -3", "لا توجد حلول حقيقية"],
+                    "options": ["3", "3-", "3 و 3-", "لا توجد حلول حقيقية"],
                     answer: "لا توجد حلول حقيقية"
                 },
                 {
-                    "question": "حل المعادلة (x-1)(x+5) = 0 هو:",
-                    "options": ["x=1 أو x=-5", "x=-1 أو x=5", "x=1 فقط", "x=-5 فقط"],
-                    answer: "x=1 أو x=-5"
+                    "question": "حل المعادلة<br><span dir=\"ltr\">(x-1)(x+5) = 0</span><br>هو:",
+                    "options": ["<span dir=\"ltr\">x=1 أو x=-5</span>", "<span dir=\"ltr\">x=-1 أو x=5</span>", "<span dir=\"ltr\">x=1 فقط</span>", "<span dir=\"ltr\">x=-5 فقط</span>"],
+                    answer: "<span dir=\"ltr\">x=1 أو x=-5</span>"
                 },
                 {
-                    "question": "ما هي حلول المعادلة (2x - 4)(x + 3) = 0؟",
-                    "options": ["x=2 أو x=-3", "x=-2 أو x=3", "x=4 أو x=-3", "x=2 فقط"],
-                    "answer": "x=2 أو x=-3"
+                    "question": "ما هي حلول المعادلة<br><span dir=\"ltr\">(2x - 4)(x + 3) = 0</span>؟",
+                    "options": ["<span dir=\"ltr\">x=2 أو x=-3</span>", "<span dir=\"ltr\">x=-2 أو x=3</span>", "<span dir=\"ltr\">x=4 أو x=-3</span>", "<span dir=\"ltr\">x=2 فقط</span>"],
+                    "answer": "<span dir=\"ltr\">x=2 أو x=-3</span>"
                 },
                 {
                     "question": "لحل المعادلة x² - 9 = 0، يمكن تحليلها إلى...",
-                    "options": ["(x-3)(x+3)=0", "(x-9)(x+9)=0", "x(x-9)=0", "لا يمكن تحليلها"],
-                    "answer": "(x-3)(x+3)=0"
+                    "options": ["<span dir=\"ltr\">(x-3)(x+3)=0</span>", "<span dir=\"ltr\">(x-9)(x+9)=0</span>", "x(x-9)=0", "لا يمكن تحليلها"],
+                    "answer": "<span dir=\"ltr\">(x-3)(x+3)=0</span>"
                 }
             ]
         },
@@ -1781,9 +1755,9 @@ const extendedExercises = {
                     answer: "x > 3"
                 },
                 {
-                    "question": "حل المتراجحة 4 - 2y ≤ 10 هو:",
-                    "options": ["y ≥ -3", "y ≤ -3", "y ≥ 3", "y ≤ 3"],
-                    answer: "y ≥ -3"
+                    "question": "حل المتراجحة<br><span dir=\"ltr\">4 - 2y ≤ 10</span><br>هو:",
+                    "options": ["<span dir=\"ltr\">y ≥ -3</span>", "<span dir=\"ltr\">y ≤ -3</span>", "<span dir=\"ltr\">y ≥ 3U</span>", "<span dir=\"ltr\">y ≤ 3</span>"],
+                    answer: "<span dir=\"ltr\">y ≥ -3</span>"
                 },
                 {
                     "question": "عند ضرب أو قسمة طرفي متباينة على عدد سالب، فإننا...",
@@ -1811,7 +1785,7 @@ const extendedExercises = {
                 },
                 {
                     "question": "إذا كانت B هي صورة A بالانسحاب الذي شعاعه u، فإن الشعاع AB يساوي...",
-                    "options": ["u", "-u", "2u", "الشعاع المعدوم"],
+                    "options": ["u", "u-", "2u", "الشعاع المعدوم"],
                     answer: "u"
                 },
                 {
@@ -1835,8 +1809,8 @@ const extendedExercises = {
             exercises: [
                 {
                     "question": "أي من الثنائيات التالية هو حل لجملة المعادلتين: x+y=5 و x-y=1؟",
-                    "options": ["(2, 3)", "(3, 2)", "(4, 1)", "(1, 4)"],
-                    answer: "(3, 2)"
+                    "options": ["<span dir=\"ltr\">(2, 3)</span>", "<span dir=\"ltr\">(3, 2)</span>", "<span dir=\"ltr\">(4, 1)</span>", "<span dir=\"ltr\">(1, 4)</span>"],
+                    answer: "<span dir=\"ltr\">(3, 2)</span>"
                 },
                 {
                     "question": "طريقة حل جملة معادلتين بتعويض قيمة أحد المجهولين من معادلة في الأخرى تسمى طريقة...",
@@ -1884,20 +1858,61 @@ const extendedExercises = {
                 },
                 {
                     "question": "صورة العدد 1 بالدالة g(x) = -2x + 5 هي:",
-                    "options": ["-2", "5", "3", "7"],
+                    "options": ["2-", "5", "3", "7"],
                     answer: "3"
                 }
             ]
         },
         "الزوايا والمضلعات المنتظمة والدوران": {
-            exercises: []
+            exercises: [
+                {
+                    "question": "ما هو قياس الزاوية الداخلية لمضلع منتظم له 6 أضلاع؟",
+                    "options": ["<span dir=\"ltr\">120°</span>", "<span dir=\"ltr\">90°</span>", "<span dir=\"ltr\">60°</span>", "<span dir=\"ltr\">180°</span>"],
+                    "answer": "<span dir=\"ltr\">120°</span>",
+                    "solution": "الزاوية الداخلية = <span dir=\"ltr\">(n-2) × 180° / n = (6-2) × 180° / 6 = 4 × 180° / 6 = 120°</span>"
+                },
+                {
+                    "question": "كم عدد الأقطار في مضلع منتظم له 8 أضلاع؟",
+                    "options": ["<span dir=\"ltr\">20</span>", "<span dir=\"ltr\">16</span>", "<span dir=\"ltr\">24</span>", "<span dir=\"ltr\">28</span>"],
+                    "answer": "<span dir=\"ltr\">20</span>",
+                    "solution": "عدد الأقطار = n(n-3)/2 = 8(8-3)/2 = 8×5/2 = 40/2 = <span dir=\"ltr\">20</span>"
+                },
+                {
+                    "question": "ما هو قياس الزاوية المركزية لمضلع منتظم له 5 أضلاع؟",
+                    "options": ["<span dir=\"ltr\">72°</span>", "<span dir=\"ltr\">60°</span>", "<span dir=\"ltr\">90°</span>", "<span dir=\"ltr\">108°</span>"],
+                    "answer": "<span dir=\"ltr\">72°</span>",
+                    "solution": "الزاوية المركزية = <span dir=\"ltr\">360° / n = 360° / 5 = 72°</span>"
+                },
+                {
+                    "question": "إذا كان قياس الزاوية الداخلية لمضلع منتظم <span dir=\"ltr\">135°</span>، فكم عدد أضلاعه؟",
+                    "options": ["<span dir=\"ltr\">8</span>", "<span dir=\"ltr\">6</span>", "<span dir=\"ltr\">10</span>", "<span dir=\"ltr\">12</span>"],
+                    "answer": "<span dir=\"ltr\">8</span>",
+                    "solution": "<span dir=\"ltr\">135° = (n-2) × 180° / n → 135n = 180n - 360 → 45n = 360 → n = 8</span>"
+                },
+                {
+                    "question": "ما هو مجموع قياسات الزوايا الداخلية لمضلع منتظم له 7 أضلاع؟",
+                    "options": ["<span dir=\"ltr\">900°</span>", "<span dir=\"ltr\">720°</span>", "<span dir=\"ltr\">1080°</span>", "<span dir=\"ltr\">1260°</span>"],
+                    "answer": "<span dir=\"ltr\">900°</span>",
+                    "solution": "مجموع الزوايا الداخلية = (n-2) × 180° = (7-2) × 180° = 5 × 180° = <span dir=\"ltr\">900°</span>"
+                },
+                {
+                    "question": "في دائرة، إذا كان قياس الزاوية المركزية <span dir=\"ltr\">60°</span>، فما هو قياس الزاوية المحيطية المقابلة لنفس القوس؟",
+                    "options": ["<span dir=\"ltr\">30°</span>", "<span dir=\"ltr\">60°</span>", "<span dir=\"ltr\">120°</span>", "<span dir=\"ltr\">90°</span>"],
+                    "answer": "<span dir=\"ltr\">30°</span>"
+                },
+                {
+                    "question": "ما هي العلاقة بين الزاوية المركزية والزاوية المحيطية في دائرة؟",
+                    "options": ["الزاوية المركزية تساوي ضعف الزاوية المحيطية", "الزاوية المحيطية تساوي ضعف الزاوية المركزية", "الزاويتان متساويتان", "لا توجد علاقة بينهما"],
+                    "answer": "الزاوية المركزية تساوي ضعف الزاوية المحيطية"
+                }
+            ]
         },
         "الهندسة الفضائية": {
             exercises: [
                 {
-                    "question": "ما هو حجم مكعب طول حرفه 3 سم؟",
-                    "options": ["9 سم³", "18 سم³", "27 سم³", "12 سم³"],
-                    answer: "27 سم³"
+                    "question": "ما هو حجم مكعب طول حرفه <span dir=\"ltr\">3 cm</span>؟",
+                    "options": ["<span dir=\"ltr\">9 cm³</span>", "<span dir=\"ltr\">18 cm³</span>", "<span dir=\"ltr\">27 cm³</span>", "<span dir=\"ltr\">12 cm³</span>"],
+                    answer: "<span dir=\"ltr\">27 cm³</span>"
                 },
                 {
                     "question": "المساحة الجانبية لأسطوانة دوران نصف قطر قاعدتها r وارتفاعها h هي:",
@@ -1911,8 +1926,8 @@ const extendedExercises = {
                 },
                 {
                     "question": "كرة نصف قطرها R، حجمها هو:",
-                    "options": ["4πR²", "(4/3)πR³", "πR³", "2πR"],
-                    answer: "(4/3)πR³"
+                    "options": ["4πR²", "<span dir=\"ltr\">(4/3)πR³</span>", "πR³", "2πR"],
+                    answer: "<span dir=\"ltr\">(4/3)πR³</span>"
                 },
                 {
                     "question": "مقطع كرة بمستو هو دائمًا...",
