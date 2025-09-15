@@ -935,7 +935,7 @@ const extendedExercises = {
                     "answer": "7+"
                 },
                 {
-                    "question": "إذا كانت <code style='font-family: monospace, monospace; direction: ltr;'>a = -3</code> و <code style='font-family: monospace, monospace; direction: ltr;'>b = +2</code>، فما هي قيمة <code style='font-family: monospace, monospace; direction: ltr;'>a × b - a</code>؟",
+                    "question": "إذا كانت:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">a = -3</div><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">b = +2</div>فما هي قيمة:<br><div style=\"text-align: left; direction: ltr; font-family: 'Courier New', monospace;\">a × b - a</div>",
                     "options": [
                         "<code style='font-family: monospace, monospace; direction: ltr;'>9-</code>",
                         "<code style='font-family: monospace, monospace; direction: ltr;'>3-</code>",
