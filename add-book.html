@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة كتاب جديد - منصة الرياضيات التفاعلية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .topics-section {
+            border: 2px dashed #bdc3c7;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .topics-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .topic-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .topic-input input {
+            flex: 1;
+        }
+
+        .topic-input button {
+            padding: 10px 15px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .topic-input button:hover {
+            background: #2980b9;
+        }
+
+        .topics-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .topic-tag {
+            background: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .topic-tag button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        .preview-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .preview-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .preview-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            z-index: 10000;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .notification.success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .notification.error {
+            background: #e74c3c;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-plus-circle"></i> إضافة كتاب جديد</h1>
+            <p>أضف معلومات الكتاب ليظهر في قائمة التحميل</p>
+        </div>
+
+        <form id="bookForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="title">عنوان الكتاب *</label>
+                    <input type="text" id="title" name="title" required placeholder="مثال: كراس النشاطات - السنة الأولى متوسط">
+                </div>
+                <div class="form-group">
+                    <label for="filename">اسم الملف *</label>
+                    <input type="text" id="filename" name="filename" required placeholder="مثال: كراس النشاطات 1م.pdf">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">وصف الكتاب *</label>
+                <textarea id="description" name="description" required placeholder="وصف مختصر لمحتويات الكتاب"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="level">المستوى التعليمي *</label>
+                    <select id="level" name="level" required>
+                        <option value="">اختر المستوى</option>
+                        <option value="السنة الأولى متوسط">السنة الأولى متوسط</option>
+                        <option value="السنة الثانية متوسط">السنة الثانية متوسط</option>
+                        <option value="السنة الثالثة متوسط">السنة الثالثة متوسط</option>
+                        <option value="السنة الرابعة متوسط">السنة الرابعة متوسط</option>
+                        <option value="جميع المستويات">جميع المستويات</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="type">نوع الكتاب *</label>
+                    <select id="type" name="type" required>
+                        <option value="">اختر النوع</option>
+                        <option value="كراس النشاطات">كراس النشاطات</option>
+                        <option value="دليل المعلم">دليل المعلم</option>
+                        <option value="كتاب مدرسي">كتاب مدرسي</option>
+                        <option value="مرجع">مرجع</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="size">حجم الملف (MB) *</label>
+                    <input type="number" id="size" name="size" step="0.1" required placeholder="مثال: 2.5">
+                </div>
+                <div class="form-group">
+                    <label for="pages">عدد الصفحات *</label>
+                    <input type="number" id="pages" name="pages" required placeholder="مثال: 120">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="icon">أيقونة الكتاب</label>
+                <select id="icon" name="icon">
+                    <option value="fas fa-book">كتاب</option>
+                    <option value="fas fa-file-pdf">ملف PDF</option>
+                    <option value="fas fa-user-tie">دليل المعلم</option>
+                    <option value="fas fa-graduation-cap">تعليمي</option>
+                    <option value="fas fa-calculator">رياضيات</option>
+                </select>
+            </div>
+
+            <div class="topics-section">
+                <h3><i class="fas fa-list"></i> مواضيع الكتاب</h3>
+                <div class="topic-input">
+                    <input type="text" id="topicInput" placeholder="أضف موضوع جديد">
+                    <button type="button" onclick="addTopic()">
+                        <i class="fas fa-plus"></i> إضافة
+                    </button>
+                </div>
+                <div class="topics-list" id="topicsList">
+                    <!-- سيتم إضافة المواضيع هنا -->
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="btn btn-primary" onclick="previewBook()">
+                    <i class="fas fa-eye"></i> معاينة
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="addToJSON()">
+                    <i class="fas fa-save"></i> إضافة للقائمة
+                </button>
+                <a href="downloads.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-right"></i> العودة للقائمة
+                </a>
+            </div>
+        </form>
+
+        <div class="preview-section" id="previewSection" style="display: none;">
+            <h3><i class="fas fa-eye"></i> معاينة الكتاب</h3>
+            <div class="preview-card" id="previewCard">
+                <!-- سيتم عرض المعاينة هنا -->
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        let topics = [];
+
+        function addTopic() {
+            const input = document.getElementById('topicInput');
+            const topic = input.value.trim();
+            
+            if (topic && !topics.includes(topic)) {
+                topics.push(topic);
+                input.value = '';
+                updateTopicsList();
+            }
+        }
+
+        function removeTopic(topic) {
+            topics = topics.filter(t => t !== topic);
+            updateTopicsList();
+        }
+
+        function updateTopicsList() {
+            const topicsList = document.getElementById('topicsList');
+            topicsList.innerHTML = topics.map(topic => `
+                <div class="topic-tag">
+                    ${topic}
+                    <button onclick="removeTopic('${topic}')">×</button>
+                </div>
+            `).join('');
+        }
+
+        function previewBook() {
+            const formData = getFormData();
+            if (!validateForm(formData)) return;
+
+            const previewCard = document.getElementById('previewCard');
+            previewCard.innerHTML = `
+                <div class="book-icon" style="color: #3498db; text-align: center; margin-bottom: 15px;">
+                    <i class="${formData.icon}" style="font-size: 48px;"></i>
+                </div>
+                <div class="book-title" style="font-size: 20px; font-weight: bold; margin-bottom: 10px; text-align: center;">
+                    ${formData.title}
+                </div>
+                <div class="book-description" style="margin-bottom: 15px; text-align: center; color: #666;">
+                    ${formData.description}
+                </div>
+                <div class="book-meta" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 15px;">
+                    <span style="background: #3498db; color: white; padding: 4px 8px; border-radius: 10px; font-size: 12px;">${formData.level}</span>
+                    <span style="background: #27ae60; color: white; padding: 4px 8px; border-radius: 10px; font-size: 12px;">${formData.type}</span>
+                    <span style="background: #e74c3c; color: white; padding: 4px 8px; border-radius: 10px; font-size: 12px;">${formData.size} MB</span>
+                    <span style="background: #f39c12; color: white; padding: 4px 8px; border-radius: 10px; font-size: 12px;">${formData.pages} صفحة</span>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <h4 style="margin-bottom: 10px;">المحتويات:</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        ${topics.map(topic => `<li style="padding: 5px 0; border-bottom: 1px solid #eee;">• ${topic}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            document.getElementById('previewSection').style.display = 'block';
+            showNotification('تم إنشاء المعاينة بنجاح', 'success');
+        }
+
+        function getFormData() {
+            return {
+                title: document.getElementById('title').value,
+                filename: document.getElementById('filename').value,
+                description: document.getElementById('description').value,
+                level: document.getElementById('level').value,
+                type: document.getElementById('type').value,
+                size: document.getElementById('size').value,
+                pages: document.getElementById('pages').value,
+                icon: document.getElementById('icon').value
+            };
+        }
+
+        function validateForm(data) {
+            if (!data.title || !data.filename || !data.description || !data.level || !data.type || !data.size || !data.pages) {
+                showNotification('يرجى ملء جميع الحقول المطلوبة', 'error');
+                return false;
+            }
+            return true;
+        }
+
+        function addToJSON() {
+            const formData = getFormData();
+            if (!validateForm(formData)) return;
+
+            const newBook = {
+                id: `book_${Date.now()}`,
+                title: formData.title,
+                filename: formData.filename,
+                description: formData.description,
+                level: formData.level,
+                type: formData.type,
+                icon: formData.icon,
+                color: getRandomColor(),
+                topics: topics,
+                size: `${formData.size} MB`,
+                pages: parseInt(formData.pages),
+                uploadDate: new Date().toISOString().split('T')[0]
+            };
+
+            // إضافة الكتاب إلى ملف JSON (هذا يتطلب خادم أو طريقة أخرى لحفظ الملف)
+            showNotification('تم إضافة الكتاب بنجاح! تأكد من رفع الملف في مجلد books/', 'success');
+            
+            // إعادة تعيين النموذج
+            document.getElementById('bookForm').reset();
+            topics = [];
+            updateTopicsList();
+            document.getElementById('previewSection').style.display = 'none';
+        }
+
+        function getRandomColor() {
+            const colors = ['#3498db', '#e74c3c', '#f39c12', '#9b59b6', '#27ae60', '#1abc9c'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // إضافة موضوع عند الضغط على Enter
+        document.getElementById('topicInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addTopic();
+            }
+        });
+    </script>
+</body>
+</html>

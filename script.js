@@ -607,3 +607,8 @@ function showLessonSelection() {
         exerciseSection.style.display = 'none';
     }
 }
+
+// Function to show downloads page
+function showDownloads() {
+    window.location.href = 'downloads.html';
+}
