@@ -3,6 +3,167 @@
 // --- المتغيرات العامة --- //
 let gameController;
 
+const MazeMathTopics = {
+    // 1. القوى ذات أسس صحيحة (موجبة وسالبة)
+    'integerPowers': {
+        getQuestion: () => {
+            let base = Math.floor(Math.random() * 4) + 2; // 2 to 5
+            let p1 = Math.floor(Math.random() * 11) - 5; // -5 to 5
+            let p2 = Math.floor(Math.random() * 11) - 5;
+
+            if (p1 === 0) p1 = 2;
+            if (p2 === 0) p2 = -2;
+
+            let question = `${base}<sup>${p1}</sup> × ${base}<sup>${p2}</sup>`;
+            let correctExp = p1 + p2;
+            let display = `${base}<sup>${correctExp}</sup>`;
+
+            return { html: question, display: display, raw: correctExp, base: base };
+        },
+        getWrong: (correctRaw, context) => {
+            let wrongExp = correctRaw + (Math.random() < 0.5 ? 1 : -1) * (Math.floor(Math.random() * 3) + 1);
+            if (wrongExp === correctRaw) wrongExp += 1;
+            return `${context.base}<sup>${wrongExp}</sup>`;
+        }
+    },
+
+    // 2. سلسلة عمليات بدون أقواس (أولوية الضرب)
+    'opsNoBrackets': {
+        getQuestion: () => {
+            let a = Math.floor(Math.random() * 9) + 2;
+            let b = Math.floor(Math.random() * 5) + 2;
+            let c = Math.floor(Math.random() * 5) + 2;
+            let isPlus = Math.random() > 0.5;
+
+            let symbol1 = isPlus ? '+' : '-';
+            let question = `${a} ${symbol1} ${b} × ${c}`;
+            let correctVal = isPlus ? a + (b * c) : a - (b * c);
+
+            return { html: question, display: correctVal, raw: correctVal, wrongContext: { a, b, c, isPlus } };
+        },
+        getWrong: (correctRaw, ctx) => {
+            let wrongVal = ctx.isPlus ? (ctx.a + ctx.b) * ctx.c : (ctx.a - ctx.b) * ctx.c;
+            if (wrongVal === correctRaw) wrongVal = correctRaw + Math.floor(Math.random() * 4) + 2;
+            return wrongVal;
+        }
+    },
+
+    // 3. سلسلة عمليات بأقواس (أولوية الأقواس)
+    'opsWithBrackets': {
+        getQuestion: () => {
+            let a = Math.floor(Math.random() * 9) + 2;
+            let b = Math.floor(Math.random() * 5) + 2;
+            let c = Math.floor(Math.random() * 4) + 2;
+            let isPlus = Math.random() > 0.5;
+
+            let symbol1 = isPlus ? '+' : '-';
+            if (!isPlus && a < b) [a, b] = [b, a];
+
+            let question = `(${a} ${symbol1} ${b}) × ${c}`;
+            let correctVal = isPlus ? (a + b) * c : (a - b) * c;
+
+            return { html: question, display: correctVal, raw: correctVal, wrongContext: { a, b, c, isPlus } };
+        },
+        getWrong: (correctRaw, ctx) => {
+            let wrongVal = ctx.isPlus ? ctx.a + (ctx.b * ctx.c) : ctx.a - (ctx.b * ctx.c);
+            if (wrongVal === correctRaw) wrongVal = correctRaw - Math.floor(Math.random() * 4) + 2;
+            return wrongVal;
+        }
+    },
+
+    // --- المواضيع القديمة ---
+    'powers10': {
+        getQuestion: () => {
+            const op = Math.random() > 0.5 ? 'mul' : 'div';
+            if (op === 'mul') {
+                let a = Math.floor(Math.random() * 4) + 2;
+                let b = Math.floor(Math.random() * 4) + 2;
+                return { html: `10<sup>${a}</sup> × 10<sup>${b}</sup>`, display: `10<sup>${a + b}</sup>`, raw: a + b, base: 10 };
+            } else {
+                let a = Math.floor(Math.random() * 4) + 5;
+                let b = Math.floor(Math.random() * 3) + 2;
+                return { html: `10<sup>${a}</sup> ÷ 10<sup>${b}</sup>`, display: `10<sup>${a - b}</sup>`, raw: a - b, base: 10 };
+            }
+        },
+        getWrong: (correctRaw, ctx) => {
+            let wrong = correctRaw + Math.floor(Math.random() * 3) + 1;
+            return `10<sup>${wrong}</sup>`;
+        }
+    },
+    'multiplication': {
+        getQuestion: () => {
+            let a = Math.floor(Math.random() * 7) + 3;
+            let b = Math.floor(Math.random() * 6) + 4;
+            return { html: `${a} × ${b}`, display: a * b, raw: a * b };
+        },
+        getWrong: (correctRaw) => correctRaw + (Math.floor(Math.random() * 4) + 2) * (Math.random() < 0.5 ? 1 : -1)
+    },
+    'simpleMath': {
+        getQuestion: () => {
+            let isAdd = Math.random() > 0.5;
+            let a = Math.floor(Math.random() * 46) + 15;
+            let b = Math.floor(Math.random() * 16) + 5;
+            if (isAdd) return { html: `${a} + ${b}`, display: a + b, raw: a + b };
+            else return { html: `${a} - ${b}`, display: a - b, raw: a - b };
+        },
+        getWrong: (correctRaw) => correctRaw + Math.floor(Math.random() * 9) - 4 || correctRaw + 1
+    },
+    'roots': {
+        getQuestion: () => {
+            let roots = [16, 25, 36, 49, 64, 81, 100, 121, 144];
+            let r = roots[Math.floor(Math.random() * roots.length)];
+            return { html: `√${r}`, display: Math.sqrt(r), raw: Math.sqrt(r) };
+        },
+        getWrong: (correctRaw) => correctRaw + Math.floor(Math.random() * 3) + 1
+    },
+    'algebra': {
+        getQuestion: () => {
+            let x = Math.floor(Math.random() * 8) + 2;
+            let a = Math.floor(Math.random() * 9) + 2;
+            let b = x + a;
+            return { html: `x + ${a} = ${b}`, display: `x = ${x}`, raw: x };
+        },
+        getWrong: (correctRaw) => `x = ${correctRaw + Math.floor(Math.random() * 3) + 1}`
+    },
+    'integers': {
+        getQuestion: () => {
+            let a = Math.floor(Math.random() * 19) - 9;
+            let b = Math.floor(Math.random() * 19) - 9;
+            if (b === 0) b = 1;
+            return { html: `${a} - (${b})`, display: a - b, raw: a - b };
+        },
+        getWrong: (correctRaw) => correctRaw * -1
+    },
+    'fractions': {
+        getQuestion: () => {
+            let den = Math.floor(Math.random() * 8) + 2;
+            let n1 = Math.floor(Math.random() * (den * 2)) + 1;
+            let n2 = Math.floor(Math.random() * den) + 1;
+            return { html: `${n1}/${den} + ${n2}/${den}`, display: `${n1 + n2}/${den}`, raw: 0 };
+        },
+        getWrong: (correctRaw) => "Err"
+    },
+    'pgcd': {
+        getQuestion: () => {
+            let a = Math.floor(Math.random() * 31) + 10;
+            let b = Math.floor(Math.random() * 31) + 10;
+            const findGCD = (x, y) => { x = Math.abs(x); y = Math.abs(y); while (y) { [x, y] = [y, x % y]; } return x; };
+            let res = findGCD(a, b);
+            if (res === 1) { a = 12; b = 18; res = 6; }
+            return { html: `PGCD(${a}; ${b})`, display: res, raw: res };
+        },
+        getWrong: (correctRaw) => correctRaw + Math.floor(Math.random() * 2) + 1
+    },
+    'expandSimplify': {
+        getQuestion: () => {
+            let a = Math.floor(Math.random() * 4) + 2;
+            let b = Math.floor(Math.random() * 3) + 2;
+            return { html: `${a}(x + ${b})`, display: `${a}x + ${a * b}`, raw: 0 };
+        },
+        getWrong: () => `${Math.floor(Math.random() * 4) + 2}x + ${Math.floor(Math.random() * 9) + 2}`
+    }
+};
+
 // --- إدارة النقاط --- //
 class ScoreManager {
     constructor() {
@@ -21,11 +182,11 @@ class ScoreManager {
             date: new Date().toISOString(),
             game: game || 'لعبة رياضيات'
         };
-        
+
         leaderboard.push(newEntry);
         leaderboard.sort((a, b) => b.score - a.score);
         leaderboard = leaderboard.slice(0, 10);
-        
+
         localStorage.setItem(this.leaderboardKey, JSON.stringify(leaderboard));
         this.displayLeaderboard();
     }
@@ -40,7 +201,7 @@ class ScoreManager {
         if (!leaderboardElement) return;
 
         const leaderboard = this.loadLeaderboard();
-        
+
         if (leaderboard.length === 0) {
             leaderboardElement.innerHTML = '<p>لا توجد نتائج بعد.</p>';
             return;
@@ -67,7 +228,7 @@ class GameController {
         this.currentGame = null;
         this.gameTimer = null;
         this.gameInterval = null;
-        
+
         // نظام المستويات
         this.currentLevel = 1;
         this.maxLevel = 5;
@@ -80,26 +241,26 @@ class GameController {
         this.memoryScore = 0;
         this.memoryIsChecking = false;
     }
-    
+
     // إدارة المستويات
     loadLevelProgress() {
         const saved = localStorage.getItem('gameLevelProgress');
         return saved ? JSON.parse(saved) : {};
     }
-    
+
     saveLevelProgress() {
         localStorage.setItem('gameLevelProgress', JSON.stringify(this.levelProgress));
     }
-    
+
     getCurrentLevel(gameType) {
         return this.levelProgress[gameType] || 1;
     }
-    
+
     increaseLevel(gameType) {
         if (!this.levelProgress[gameType]) {
             this.levelProgress[gameType] = 1;
         }
-        
+
         if (this.levelProgress[gameType] < this.maxLevel) {
             this.levelProgress[gameType]++;
             this.saveLevelProgress();
@@ -107,12 +268,12 @@ class GameController {
         }
         return this.levelProgress[gameType];
     }
-    
+
     getDifficultyMultiplier(gameType) {
         const level = this.getCurrentLevel(gameType);
         return 1 + (level - 1) * 0.3; // زيادة الصعوبة بنسبة 30% لكل مستوى
     }
-    
+
     // عرض رسالة المستوى الجديد
     showLevelUpMessage(newLevel) {
         const gameContent = document.getElementById('gameContent');
@@ -132,9 +293,9 @@ class GameController {
     generateNewGame(gameType) {
         console.log(`Generating new game: ${gameType}`);
         this.currentGame = gameType;
-        
+
         // إنشاء لعبة جديدة حسب النوع
-        switch(gameType) {
+        switch (gameType) {
             case 'الحساب السريع': this.generateQuickMathQuestion(); break;
             case 'ترتيب الأعداد': this.generateNumberSortQuestion(); break;
             case 'لعبة الذاكرة': this.generateMemoryGame(); break;
@@ -150,15 +311,16 @@ class GameController {
             case 'لعبة قراءة الساعة': this.generateTimeGame(); break;
             case 'السودوكو': this.generateSudokuGame(); break;
             case 'المربعات السحرية': this.generateMagicSquareGame(); break;
+            case 'لعبة المتاهة': this.generateMazeGame(); break;
         }
     }
-    
+
     startGame(gameType) {
         console.log(`Starting game: ${gameType}`); // تتبع بدء اللعبة
         this.currentGame = gameType;
         this.showGameArea();
 
-        switch(gameType) {
+        switch (gameType) {
             case 'الحساب السريع': this.generateQuickMathQuestion(); break;
             case 'ترتيب الأعداد': this.generateNumberSortQuestion(); break;
             case 'لعبة الذاكرة': this.generateMemoryGame(); break;
@@ -173,7 +335,8 @@ class GameController {
             case 'لعبة الكسور': this.generateFractionsGame(); break;
             case 'لعبة قراءة الساعة': this.generateTimeGame(); break;
             case 'السودوكو': this.generateSudokuGame(); break;
-        case 'المربعات السحرية': this.generateMagicSquareGame(); break;
+            case 'المربعات السحرية': this.generateMagicSquareGame(); break;
+            case 'لعبة المتاهة': this.generateMazeGame(); break;
         }
     }
 
@@ -199,7 +362,7 @@ class GameController {
     showGameResult(message, isSuccess) {
         const gameContent = document.getElementById('gameContent');
         const currentGame = this.currentGame; // حفظ اللعبة الحالية
-        
+
         gameContent.innerHTML = `
             <div class="game-result ${isSuccess ? 'success' : 'error'}">
                 <h3>${message}</h3>
@@ -209,11 +372,11 @@ class GameController {
                 </div>
             </div>
         `;
-        
+
         // ربط الأحداث بعد إنشاء العناصر
         const restartBtn = document.getElementById('restartGameBtn');
         const backBtn = document.getElementById('backToMenuBtn');
-        
+
         if (restartBtn) {
             restartBtn.addEventListener('click', () => {
                 if (currentGame) {
@@ -224,7 +387,7 @@ class GameController {
                 }
             });
         }
-        
+
         if (backBtn) {
             backBtn.addEventListener('click', () => {
                 this.hideGameArea();
@@ -249,8 +412,8 @@ class GameController {
 
         this.memoryCards = [];
         pairs.forEach(pair => {
-            this.memoryCards.push({ type: 'question', value: pair.question, pairId: pair.question });
-            this.memoryCards.push({ type: 'answer', value: pair.answer, pairId: pair.question });
+            this.memoryCards.push({ type: 'question', value: formatTextWithMath(pair.question), pairId: pair.question });
+            this.memoryCards.push({ type: 'answer', value: formatTextWithMath(pair.answer), pairId: pair.question });
         });
 
         for (let i = this.memoryCards.length - 1; i > 0; i--) {
@@ -279,7 +442,7 @@ class GameController {
             const card = document.createElement('div');
             card.classList.add('memory-card');
             card.dataset.index = index;
-            
+
             const cardFront = document.createElement('div');
             cardFront.classList.add('card-front');
             cardFront.textContent = '?';
@@ -342,12 +505,12 @@ class GameController {
 
         const level = this.getCurrentLevel('الحساب السريع');
         const difficulty = this.getDifficultyMultiplier('الحساب السريع');
-        
+
         // زيادة الصعوبة حسب المستوى
         const maxNum1 = Math.floor(20 + (level - 1) * 10);
         const maxNum2 = Math.floor(10 + (level - 1) * 5);
         const timeLimit = Math.max(15 - (level - 1) * 2, 8); // تقليل الوقت مع زيادة المستوى
-        
+
         const num1 = Math.floor(Math.random() * maxNum1) + 1;
         const num2 = Math.floor(Math.random() * maxNum2) + 1;
         const correctAnswer = num1 + num2;
@@ -364,9 +527,9 @@ class GameController {
                 </div>
                 <h3>ما هو ناتج العملية التالية؟</h3>
                 <div class="question">
-                    <span class="number">${num1}</span>
+                    <span class="number" dir="ltr">${num1}</span>
                     <span class="operator">+</span>
-                    <span class="number">${num2}</span>
+                    <span class="number" dir="ltr">${num2}</span>
                     <span class="equals">=</span>
                     <input type="number" id="quickMathAnswer" class="answer-input" placeholder="?" autofocus>
                 </div>
@@ -395,20 +558,20 @@ class GameController {
     checkQuickMathAnswer(correctAnswer, level) {
         if (this.gameInterval) clearInterval(this.gameInterval);
         const userAnswer = parseInt(document.getElementById('quickMathAnswer').value);
-        
+
         if (userAnswer === correctAnswer) {
             // حساب النقاط حسب المستوى
             const baseScore = 20;
             const levelBonus = level * 5;
             const timeBonus = 10; // مكافأة إضافية للإجابة السريعة
             const totalScore = baseScore + levelBonus + timeBonus;
-            
+
             // زيادة المستوى
             const newLevel = this.increaseLevel('الحساب السريع');
-            
+
             this.showGameResult(`🎉 أحسنت! إجابة صحيحة! +${totalScore} نقطة`, true);
             this.endGame(true, totalScore);
-            
+
             // عرض رسالة المستوى الجديد
             if (newLevel > level) {
                 setTimeout(() => {
@@ -648,7 +811,7 @@ class GameController {
                 <div class="challenge-stats">
                     <span>النقاط: <span id="challengeScoreDisplay">${this.challengeScore}</span></span>
                 </div>
-                <div class="question">${question} = ?</div>
+                <div class="question">${formatTextWithMath(question)} = ?</div>
                 <div class="challenge-input">
                     <input type="number" id="challengeAnswer" class="answer-input" autofocus>
                     <button id="checkChallengeBtn" class="btn btn-primary">تحقق</button>
@@ -718,9 +881,9 @@ class GameController {
             <div class="balancing-equation-game">
                 <h3>أوجد قيمة X لتحقيق توازن المعادلة:</h3>
                 <div class="equation-display">
-                    <div class="side left-side">${equation.left}</div>
+                    <div class="side left-side">${formatTextWithMath(equation.left)}</div>
                     <div class="equals">=</div>
-                    <div class="side right-side">${equation.right}</div>
+                    <div class="side right-side">${formatTextWithMath(equation.right)}</div>
                 </div>
                 <div class="balance-input">
                     <span>X = </span>
@@ -789,7 +952,7 @@ class GameController {
         gameContent.innerHTML = `
             <div class="word-problem-game">
                 <h3>حل المسألة التالية:</h3>
-                <p class="problem-text">${problem.question}</p>
+                <p class="problem-text">${formatTextWithMath(problem.question)}</p>
                 <div class="word-problem-input">
                     <input type="number" id="wordProblemAnswer" class="answer-input" autofocus>
                     <button id="checkWordProblemBtn" class="btn btn-primary">تحقق</button>
@@ -859,7 +1022,7 @@ class GameController {
             this.showGameResult(`إجابة خاطئة. الجواب الصحيح هو ${correctAnswer}.`, false);
         }
     }
-    
+
     // --- لعبة تدريب جدول الضرب (Multiplication Grid) --- //
     generateMultiplicationGridGame() {
         const size = 6;
@@ -959,7 +1122,7 @@ class GameController {
             data = { shape, w, h, questionType, correct: questionType === 'area' ? area : perimeter };
         } else {
             // مثلث قائم الزاوية باستخدام ثلاثيات فيثاغورس
-            const triples = [ [3,4,5], [5,12,13], [6,8,10] ];
+            const triples = [[3, 4, 5], [5, 12, 13], [6, 8, 10]];
             const t = triples[Math.floor(Math.random() * triples.length)];
             const k = Math.random() < 0.5 ? 1 : 2; // تكبير اختياري
             const a = t[0] * k, b = t[1] * k, c = t[2] * k;
@@ -1008,7 +1171,7 @@ class GameController {
         const d = this.geoAP;
         const canvas = document.getElementById('geoApCanvas');
         const ctx = canvas.getContext('2d');
-        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.lineWidth = 2;
         ctx.strokeStyle = '#2d3748';
         ctx.fillStyle = '#edf2f7';
@@ -1027,8 +1190,8 @@ class GameController {
             ctx.strokeRect(x, y, rw, rh);
             // وسوم الأبعاد
             ctx.fillStyle = '#4a5568';
-            ctx.fillText(`عرض = ${d.w}`, x + rw/2, y - 6);
-            ctx.fillText(`طول = ${d.h}`, x - 28, y + rh/2);
+            ctx.fillText(`عرض = ${d.w}`, x + rw / 2, y - 6);
+            ctx.fillText(`طول = ${d.h}`, x - 28, y + rh / 2);
         } else {
             // مثلث قائم: ارسم قائمًا عند الزاوية اليسرى السفلية
             const maxSide = Math.max(d.a, d.b);
@@ -1051,8 +1214,8 @@ class GameController {
             ctx.stroke();
             // وسوم الأبعاد
             ctx.fillStyle = '#4a5568';
-            ctx.fillText(`a = ${d.a}`, (ax+bx)/2, by + 16);
-            ctx.fillText(`b = ${d.b}`, ax - 20, (ay+cy)/2);
+            ctx.fillText(`a = ${d.a}`, (ax + bx) / 2, by + 16);
+            ctx.fillText(`b = ${d.b}`, ax - 20, (ay + cy) / 2);
         }
     }
 
@@ -1101,7 +1264,7 @@ class GameController {
     generateFraction() {
         let numerator = Math.floor(Math.random() * 9) + 1;
         let denominator = Math.floor(Math.random() * 9) + 1;
-        
+
         // Ensure denominator is not smaller than numerator to keep it simple for now
         if (denominator < numerator) {
             [numerator, denominator] = [denominator, numerator];
@@ -1228,7 +1391,7 @@ class GameController {
     generateMagicSquareGame() {
         const level = this.getCurrentLevel('المربعات السحرية');
         const difficulty = this.getDifficultyMultiplier('المربعات السحرية');
-        
+
         const gameContent = document.getElementById('gameContent');
         gameContent.innerHTML = `
             <div class="magic-square-game">
@@ -1265,7 +1428,7 @@ class GameController {
 
         // تهيئة اللعبة
         this.initializeMagicSquareGame();
-        
+
         // ربط الأحداث
         this.bindMagicSquareEvents();
     }
@@ -1274,7 +1437,7 @@ class GameController {
     generateCrossmathGame() {
         const level = this.getCurrentLevel('الرياضيات المتقاطعة');
         const difficulty = this.getDifficultyMultiplier('الرياضيات المتقاطعة');
-        
+
         const gameContent = document.getElementById('gameContent');
         gameContent.innerHTML = `
             <div class="crossmath-game">
@@ -1343,11 +1506,11 @@ class GameController {
                 </div>
             </div>
         `;
-        
+
         // ربط الأحداث
         this.bindCrossmathEvents();
     }
-    
+
     bindCrossmathEvents() {
         // ربط أزرار الأرقام
         document.querySelectorAll('.number-btn').forEach(btn => {
@@ -1363,17 +1526,17 @@ class GameController {
                 }
             });
         });
-        
+
         // ربط زر التحقق
         document.getElementById('checkCrossmathBtn').addEventListener('click', () => {
             this.checkCrossmathAnswer();
         });
-        
+
         // ربط زر إعادة التعيين
         document.getElementById('resetCrossmathBtn').addEventListener('click', () => {
             this.resetCrossmathGame();
         });
-        
+
         // ربط الخلايا لإدخال الأرقام
         document.querySelectorAll('.crossmath-cell.input-cell').forEach(input => {
             input.addEventListener('input', (e) => {
@@ -1384,31 +1547,31 @@ class GameController {
             });
         });
     }
-    
+
     checkCrossmathAnswer() {
         const cell1 = parseInt(document.getElementById('cell1').value) || 0;
         const cell2 = parseInt(document.getElementById('cell2').value) || 0;
         const cell3 = parseInt(document.getElementById('cell3').value) || 0;
         const cell4 = parseInt(document.getElementById('cell4').value) || 0;
         const cell5 = parseInt(document.getElementById('cell5').value) || 0;
-        
+
         // التحقق من المعادلات
         const equation1 = cell1 - 1 === cell2; // _ - 1 = _
         const equation2 = cell3 === 3 + cell4; // _ = 3 + _
         const equation3 = 18 === cell5 + 9;    // 18 = _ + 9
-        
+
         if (equation1 && equation2 && equation3) {
             const level = this.getCurrentLevel('الرياضيات المتقاطعة');
             const baseScore = 50;
             const levelBonus = level * 10;
             const totalScore = baseScore + levelBonus;
-            
+
             // زيادة المستوى
             const newLevel = this.increaseLevel('الرياضيات المتقاطعة');
-            
+
             this.showGameResult(`🎉 أحسنت! لقد حللت اللغز بنجاح! +${totalScore} نقطة`, true);
             this.endGame(true, totalScore);
-            
+
             // عرض رسالة المستوى الجديد
             if (newLevel > level) {
                 setTimeout(() => {
@@ -1420,11 +1583,11 @@ class GameController {
             if (!equation1) errorMessage += '\n• المعادلة الأولى: _ - 1 = _';
             if (!equation2) errorMessage += '\n• المعادلة الثانية: _ = 3 + _';
             if (!equation3) errorMessage += '\n• المعادلة الثالثة: 18 = _ + 9';
-            
+
             this.showGameResult(errorMessage, false);
         }
     }
-    
+
     resetCrossmathGame() {
         document.querySelectorAll('.crossmath-cell.input-cell').forEach(input => {
             input.value = '';
@@ -1435,18 +1598,18 @@ class GameController {
     generateSudokuGame() {
         const level = this.getCurrentLevel('السودوكو');
         const difficulty = this.getDifficultyMultiplier('السودوكو');
-        
+
         // لغز السودوكو (يمكن تغييره أو توليده لاحقًا)
         const puzzle = [
-            [0,0,0,5,3,0,1,0,2],
-            [0,1,0,9,0,7,0,0,0],
-            [6,4,0,0,0,2,0,0,0],
-            [0,0,0,0,0,0,4,0,2],
-            [7,5,6,0,0,0,0,1,0],
-            [4,0,0,0,9,0,7,0,0],
-            [2,0,1,8,0,0,0,3,0],
-            [5,3,0,0,0,0,0,6,7],
-            [8,0,0,5,0,3,2,0,0]
+            [0, 0, 0, 5, 3, 0, 1, 0, 2],
+            [0, 1, 0, 9, 0, 7, 0, 0, 0],
+            [6, 4, 0, 0, 0, 2, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 4, 0, 2],
+            [7, 5, 6, 0, 0, 0, 0, 1, 0],
+            [4, 0, 0, 0, 9, 0, 7, 0, 0],
+            [2, 0, 1, 8, 0, 0, 0, 3, 0],
+            [5, 3, 0, 0, 0, 0, 0, 6, 7],
+            [8, 0, 0, 5, 0, 3, 2, 0, 0]
         ];
 
         const gameContent = document.getElementById('gameContent');
@@ -1522,7 +1685,7 @@ class GameController {
             btn.addEventListener('click', () => {
                 const difficulty = btn.dataset.difficulty;
                 this.startSudokuWithDifficulty(difficulty);
-                
+
                 // إخفاء اختيار الصعوبة وإظهار اللعبة
                 difficultySelection.style.display = 'none';
                 gameArea.style.display = 'block';
@@ -1534,60 +1697,60 @@ class GameController {
         // لغز السودوكو حسب مستوى الصعوبة
         const puzzles = {
             easy: [
-                [5,3,0,0,7,0,0,0,0],
-                [6,0,0,1,9,5,0,0,0],
-                [0,9,8,0,0,0,0,6,0],
-                [8,0,0,0,6,0,0,0,3],
-                [4,0,0,8,0,3,0,0,1],
-                [7,0,0,0,2,0,0,0,6],
-                [0,6,0,0,0,0,2,8,0],
-                [0,0,0,4,1,9,0,0,5],
-                [0,0,0,0,8,0,0,7,9]
+                [5, 3, 0, 0, 7, 0, 0, 0, 0],
+                [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                [0, 0, 0, 0, 8, 0, 0, 7, 9]
             ],
             medium: [
-                [0,0,0,5,3,0,1,0,2],
-                [0,1,0,9,0,7,0,0,0],
-                [6,4,0,0,0,2,0,0,0],
-                [0,0,0,0,0,0,4,0,2],
-                [7,5,6,0,0,0,0,1,0],
-                [4,0,0,0,9,0,7,0,0],
-                [2,0,1,8,0,0,0,3,0],
-                [5,3,0,0,0,0,0,6,7],
-                [8,0,0,5,0,3,2,0,0]
+                [0, 0, 0, 5, 3, 0, 1, 0, 2],
+                [0, 1, 0, 9, 0, 7, 0, 0, 0],
+                [6, 4, 0, 0, 0, 2, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 4, 0, 2],
+                [7, 5, 6, 0, 0, 0, 0, 1, 0],
+                [4, 0, 0, 0, 9, 0, 7, 0, 0],
+                [2, 0, 1, 8, 0, 0, 0, 3, 0],
+                [5, 3, 0, 0, 0, 0, 0, 6, 7],
+                [8, 0, 0, 5, 0, 3, 2, 0, 0]
             ],
             hard: [
-                [0,0,0,0,0,0,0,1,2],
-                [0,0,0,0,3,5,0,0,0],
-                [0,0,2,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0]
+                [0, 0, 0, 0, 0, 0, 0, 1, 2],
+                [0, 0, 0, 0, 3, 5, 0, 0, 0],
+                [0, 0, 2, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0]
             ],
             expert: [
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0]
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0]
             ]
         };
 
         const puzzle = puzzles[difficulty];
         this.currentDifficulty = difficulty;
-        
+
         // تهيئة اللعبة
         this.initializeSudokuGame(puzzle);
-        
+
         // ربط الأحداث
         this.bindSudokuEvents();
-        
+
         // تحديث النص حسب الصعوبة
         const statusEl = document.getElementById('sudokuStatus');
         const difficultyNames = {
@@ -1602,9 +1765,9 @@ class GameController {
     initializeSudokuGame(puzzle) {
         this.sudokuPuzzle = puzzle;
         this.sudokuGrid = JSON.parse(JSON.stringify(puzzle));
-        this.sudokuGiven = Array.from({length: 9}, () => Array(9).fill(false));
+        this.sudokuGiven = Array.from({ length: 9 }, () => Array(9).fill(false));
         this.sudokuSelected = null;
-        
+
         this.buildSudokuBoard();
         this.buildSudokuKeypad();
     }
@@ -1612,15 +1775,15 @@ class GameController {
     buildSudokuBoard() {
         const boardEl = document.getElementById('sudokuBoard');
         boardEl.innerHTML = '';
-        
-        for(let r = 0; r < 9; r++) {
-            for(let c = 0; c < 9; c++) {
+
+        for (let r = 0; r < 9; r++) {
+            for (let c = 0; c < 9; c++) {
                 const cell = document.createElement('div');
                 cell.className = 'sudoku-cell';
                 cell.dataset.r = r;
                 cell.dataset.c = c;
-                
-                if(this.sudokuPuzzle[r][c] !== 0) {
+
+                if (this.sudokuPuzzle[r][c] !== 0) {
                     cell.textContent = this.sudokuPuzzle[r][c];
                     cell.classList.add('given');
                     this.sudokuGiven[r][c] = true;
@@ -1628,7 +1791,7 @@ class GameController {
                     cell.textContent = this.sudokuGrid[r][c] || '';
                     this.sudokuGiven[r][c] = false;
                 }
-                
+
                 cell.addEventListener('click', () => this.selectSudokuCell(r, c));
                 boardEl.appendChild(cell);
             }
@@ -1638,15 +1801,15 @@ class GameController {
     buildSudokuKeypad() {
         const keypadEl = document.getElementById('sudokuKeypad');
         keypadEl.innerHTML = '';
-        
-        for(let n = 1; n <= 9; n++) {
+
+        for (let n = 1; n <= 9; n++) {
             const btn = document.createElement('button');
             btn.className = 'sudoku-key';
             btn.textContent = n;
             btn.addEventListener('click', () => this.handleSudokuNumber(n));
             keypadEl.appendChild(btn);
         }
-        
+
         const eraseBtn = document.createElement('button');
         eraseBtn.className = 'sudoku-key erase';
         eraseBtn.textContent = 'مسح';
@@ -1655,64 +1818,64 @@ class GameController {
     }
 
     selectSudokuCell(r, c) {
-        this.sudokuSelected = {r, c};
-        
+        this.sudokuSelected = { r, c };
+
         // إزالة التحديد السابق
         document.querySelectorAll('.sudoku-cell').forEach(el => el.classList.remove('selected'));
-        
+
         // تحديد الخانة الجديدة
         const idx = r * 9 + c;
         const cell = document.getElementById('sudokuBoard').children[idx];
         cell.classList.add('selected');
-        
+
         const statusEl = document.getElementById('sudokuStatus');
-        if(this.sudokuGiven[r][c]) {
+        if (this.sudokuGiven[r][c]) {
             statusEl.textContent = 'خانة مُعطاة (ثابتة) — لا يمكن تعديلها.';
         } else {
-            statusEl.textContent = `الخانة (${r+1},${c+1}) محددة — اختر رقمًا.`;
+            statusEl.textContent = `الخانة (${r + 1},${c + 1}) محددة — اختر رقمًا.`;
         }
     }
 
     handleSudokuNumber(n) {
-        if(!this.sudokuSelected) {
+        if (!this.sudokuSelected) {
             document.getElementById('sudokuStatus').textContent = 'اختر خانة أولاً.';
             return;
         }
-        
-        const {r, c} = this.sudokuSelected;
-        if(this.sudokuGiven[r][c]) {
+
+        const { r, c } = this.sudokuSelected;
+        if (this.sudokuGiven[r][c]) {
             document.getElementById('sudokuStatus').textContent = 'لا يمكن تعديل خانة مُعطاة.';
             return;
         }
-        
+
         this.sudokuGrid[r][c] = n;
         const idx = r * 9 + c;
         const el = document.getElementById('sudokuBoard').children[idx];
         el.textContent = n;
         el.classList.add('user');
-        
-        document.getElementById('sudokuStatus').textContent = `وضعت ${n} في الخانة (${r+1},${c+1}).`;
+
+        document.getElementById('sudokuStatus').textContent = `وضعت ${n} في الخانة (${r + 1},${c + 1}).`;
     }
 
     handleSudokuErase() {
-        if(!this.sudokuSelected) {
+        if (!this.sudokuSelected) {
             document.getElementById('sudokuStatus').textContent = 'اختر خانة أولاً.';
             return;
         }
-        
-        const {r, c} = this.sudokuSelected;
-        if(this.sudokuGiven[r][c]) {
+
+        const { r, c } = this.sudokuSelected;
+        if (this.sudokuGiven[r][c]) {
             document.getElementById('sudokuStatus').textContent = 'لا يمكن مسح خانة مُعطاة.';
             return;
         }
-        
+
         this.sudokuGrid[r][c] = 0;
         const idx = r * 9 + c;
         const el = document.getElementById('sudokuBoard').children[idx];
         el.textContent = '';
         el.classList.remove('user');
-        
-        document.getElementById('sudokuStatus').textContent = `مُسِحت الخانة (${r+1},${c+1}).`;
+
+        document.getElementById('sudokuStatus').textContent = `مُسِحت الخانة (${r + 1},${c + 1}).`;
     }
 
     bindSudokuEvents() {
@@ -1721,30 +1884,30 @@ class GameController {
         document.getElementById('newSudokuBtn').addEventListener('click', () => this.newSudokuGame());
         document.getElementById('resetSudokuBtn').addEventListener('click', () => this.resetSudokuGame());
         document.getElementById('changeDifficultyBtn').addEventListener('click', () => this.showDifficultySelection());
-        
+
         // ربط لوحة المفاتيح
         document.addEventListener('keydown', (e) => {
-            if(e.key >= '1' && e.key <= '9') {
+            if (e.key >= '1' && e.key <= '9') {
                 this.handleSudokuNumber(parseInt(e.key, 10));
             }
-            if(e.key === 'Backspace' || e.key === 'Delete') {
+            if (e.key === 'Backspace' || e.key === 'Delete') {
                 this.handleSudokuErase();
             }
-            
+
             // أسهم للتنقل
-            if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
                 e.preventDefault();
-                if(!this.sudokuSelected) {
+                if (!this.sudokuSelected) {
                     this.selectSudokuCell(0, 0);
                     return;
                 }
-                
-                let {r, c} = this.sudokuSelected;
-                if(e.key === 'ArrowUp') r = Math.max(0, r-1);
-                if(e.key === 'ArrowDown') r = Math.min(8, r+1);
-                if(e.key === 'ArrowLeft') c = Math.max(0, c-1);
-                if(e.key === 'ArrowRight') c = Math.min(8, c+1);
-                
+
+                let { r, c } = this.sudokuSelected;
+                if (e.key === 'ArrowUp') r = Math.max(0, r - 1);
+                if (e.key === 'ArrowDown') r = Math.min(8, r + 1);
+                if (e.key === 'ArrowLeft') c = Math.max(0, c - 1);
+                if (e.key === 'ArrowRight') c = Math.min(8, c + 1);
+
                 this.selectSudokuCell(r, c);
             }
         });
@@ -1753,11 +1916,11 @@ class GameController {
     showDifficultySelection() {
         const gameArea = document.querySelector('.sudoku-game-area');
         const difficultySelection = document.querySelector('.difficulty-selection');
-        
+
         // إظهار اختيار الصعوبة وإخفاء اللعبة
         gameArea.style.display = 'none';
         difficultySelection.style.display = 'block';
-        
+
         // إعادة تعيين اللعبة
         this.sudokuGrid = null;
         this.sudokuSelected = null;
@@ -1766,34 +1929,34 @@ class GameController {
     checkSudokuSolution() {
         // التحقق من اكتمال اللعبة
         let isComplete = true;
-        for(let r = 0; r < 9; r++) {
-            for(let c = 0; c < 9; c++) {
-                if(this.sudokuGrid[r][c] === 0) {
+        for (let r = 0; r < 9; r++) {
+            for (let c = 0; c < 9; c++) {
+                if (this.sudokuGrid[r][c] === 0) {
                     isComplete = false;
                     break;
                 }
             }
-            if(!isComplete) break;
+            if (!isComplete) break;
         }
-        
-        if(!isComplete) {
+
+        if (!isComplete) {
             document.getElementById('sudokuStatus').textContent = 'لم تكتمل اللعبة بعد. املأ جميع الخلايا الفارغة.';
             return;
         }
-        
+
         // التحقق من صحة الحل
-        if(this.isValidSudokuSolution()) {
+        if (this.isValidSudokuSolution()) {
             const level = this.getCurrentLevel('السودوكو');
             const baseScore = 100;
             const levelBonus = level * 20;
             const totalScore = baseScore + levelBonus;
-            
+
             const newLevel = this.increaseLevel('السودوكو');
-            
+
             this.showGameResult(`🎉 أحسنت! حل صحيح! +${totalScore} نقطة`, true);
             this.endGame(true, totalScore);
-            
-            if(newLevel > level) {
+
+            if (newLevel > level) {
                 setTimeout(() => {
                     this.showLevelUpMessage(newLevel);
                 }, 1000);
@@ -1805,36 +1968,36 @@ class GameController {
 
     isValidSudokuSolution() {
         // التحقق من الصفوف
-        for(let r = 0; r < 9; r++) {
+        for (let r = 0; r < 9; r++) {
             const row = new Set();
-            for(let c = 0; c < 9; c++) {
-                if(row.has(this.sudokuGrid[r][c])) return false;
+            for (let c = 0; c < 9; c++) {
+                if (row.has(this.sudokuGrid[r][c])) return false;
                 row.add(this.sudokuGrid[r][c]);
             }
         }
-        
+
         // التحقق من الأعمدة
-        for(let c = 0; c < 9; c++) {
+        for (let c = 0; c < 9; c++) {
             const col = new Set();
-            for(let r = 0; r < 9; r++) {
-                if(col.has(this.sudokuGrid[r][c])) return false;
+            for (let r = 0; r < 9; r++) {
+                if (col.has(this.sudokuGrid[r][c])) return false;
                 col.add(this.sudokuGrid[r][c]);
             }
         }
-        
+
         // التحقق من المربعات 3×3
-        for(let boxR = 0; boxR < 9; boxR += 3) {
-            for(let boxC = 0; boxC < 9; boxC += 3) {
+        for (let boxR = 0; boxR < 9; boxR += 3) {
+            for (let boxC = 0; boxC < 9; boxC += 3) {
                 const box = new Set();
-                for(let r = boxR; r < boxR + 3; r++) {
-                    for(let c = boxC; c < boxC + 3; c++) {
-                        if(box.has(this.sudokuGrid[r][c])) return false;
+                for (let r = boxR; r < boxR + 3; r++) {
+                    for (let c = boxC; c < boxC + 3; c++) {
+                        if (box.has(this.sudokuGrid[r][c])) return false;
                         box.add(this.sudokuGrid[r][c]);
                     }
                 }
             }
         }
-        
+
         return true;
     }
 
@@ -1842,60 +2005,60 @@ class GameController {
         // توليد لغز جديد حسب الصعوبة الحالية
         const puzzles = {
             easy: [
-                [5,3,0,0,7,0,0,0,0],
-                [6,0,0,1,9,5,0,0,0],
-                [0,9,8,0,0,0,0,6,0],
-                [8,0,0,0,6,0,0,0,3],
-                [4,0,0,8,0,3,0,0,1],
-                [7,0,0,0,2,0,0,0,6],
-                [0,6,0,0,0,0,2,8,0],
-                [0,0,0,4,1,9,0,0,5],
-                [0,0,0,0,8,0,0,7,9]
+                [5, 3, 0, 0, 7, 0, 0, 0, 0],
+                [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                [0, 0, 0, 0, 8, 0, 0, 7, 9]
             ],
             medium: [
-                [0,0,0,5,3,0,1,0,2],
-                [0,1,0,9,0,7,0,0,0],
-                [6,4,0,0,0,2,0,0,0],
-                [0,0,0,0,0,0,4,0,2],
-                [7,5,6,0,0,0,0,1,0],
-                [4,0,0,0,9,0,7,0,0],
-                [2,0,1,8,0,0,0,3,0],
-                [5,3,0,0,0,0,0,6,7],
-                [8,0,0,5,0,3,2,0,0]
+                [0, 0, 0, 5, 3, 0, 1, 0, 2],
+                [0, 1, 0, 9, 0, 7, 0, 0, 0],
+                [6, 4, 0, 0, 0, 2, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 4, 0, 2],
+                [7, 5, 6, 0, 0, 0, 0, 1, 0],
+                [4, 0, 0, 0, 9, 0, 7, 0, 0],
+                [2, 0, 1, 8, 0, 0, 0, 3, 0],
+                [5, 3, 0, 0, 0, 0, 0, 6, 7],
+                [8, 0, 0, 5, 0, 3, 2, 0, 0]
             ],
             hard: [
-                [0,0,0,0,0,0,0,1,2],
-                [0,0,0,0,3,5,0,0,0],
-                [0,0,2,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0]
+                [0, 0, 0, 0, 0, 0, 0, 1, 2],
+                [0, 0, 0, 0, 3, 5, 0, 0, 0],
+                [0, 0, 2, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0]
             ],
             expert: [
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0]
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0]
             ]
         };
-        
+
         // استخدام الصعوبة الحالية أو المتوسطة كافتراضي
         const difficulty = this.currentDifficulty || 'medium';
         this.sudokuPuzzle = JSON.parse(JSON.stringify(puzzles[difficulty]));
-        
+
         // إعادة تعيين الشبكة
         this.sudokuGrid = JSON.parse(JSON.stringify(this.sudokuPuzzle));
         this.sudokuSelected = null;
-        this.sudokuGiven = Array.from({length: 9}, () => Array(9).fill(false));
-        
+        this.sudokuGiven = Array.from({ length: 9 }, () => Array(9).fill(false));
+
         // تحديث الشبكة
         this.buildSudokuBoard();
         document.getElementById('sudokuStatus').textContent = `لعبة جديدة (${difficulty === 'easy' ? 'سهل' : difficulty === 'medium' ? 'متوسط' : difficulty === 'hard' ? 'صعب' : 'خبير'}) — اختر خانة.`;
@@ -1904,7 +2067,7 @@ class GameController {
     resetSudokuGame() {
         this.sudokuGrid = JSON.parse(JSON.stringify(this.sudokuPuzzle));
         this.sudokuSelected = null;
-        
+
         this.buildSudokuBoard();
         document.getElementById('sudokuStatus').textContent = 'تم إعادة تعيين اللعبة.';
     }
@@ -1917,7 +2080,7 @@ class GameController {
         this.magicSquareGrid = Array(this.magicSquareSize).fill().map(() => Array(this.magicSquareSize).fill(0));
         this.magicSquareSelected = null;
         this.magicSquareGiven = Array(this.magicSquareSize).fill().map(() => Array(this.magicSquareSize).fill(false));
-        
+
         // وضع بعض الأرقام كتلميحات
         this.magicSquareGrid[0][0] = 8;
         this.magicSquareGrid[1][1] = 5;
@@ -1925,10 +2088,10 @@ class GameController {
         this.magicSquareGiven[0][0] = true;
         this.magicSquareGiven[1][1] = true;
         this.magicSquareGiven[2][2] = true;
-        
+
         this.buildMagicSquareBoard();
         this.buildMagicSquareKeypad();
-        
+
         // تحديث المجموع المطلوب
         document.getElementById('magicSum').textContent = this.magicSum;
     }
@@ -1936,21 +2099,21 @@ class GameController {
     buildMagicSquareBoard() {
         const boardEl = document.getElementById('magicSquareBoard');
         boardEl.innerHTML = '';
-        
-        for(let r = 0; r < this.magicSquareSize; r++) {
-            for(let c = 0; c < this.magicSquareSize; c++) {
+
+        for (let r = 0; r < this.magicSquareSize; r++) {
+            for (let c = 0; c < this.magicSquareSize; c++) {
                 const cell = document.createElement('div');
                 cell.className = 'magic-square-cell';
                 cell.dataset.r = r;
                 cell.dataset.c = c;
-                
-                if(this.magicSquareGiven[r][c]) {
+
+                if (this.magicSquareGiven[r][c]) {
                     cell.textContent = this.magicSquareGrid[r][c];
                     cell.classList.add('given');
                 } else {
                     cell.textContent = this.magicSquareGrid[r][c] || '';
                 }
-                
+
                 cell.addEventListener('click', () => this.selectMagicSquareCell(r, c));
                 boardEl.appendChild(cell);
             }
@@ -1960,15 +2123,15 @@ class GameController {
     buildMagicSquareKeypad() {
         const keypadEl = document.getElementById('magicSquareKeypad');
         keypadEl.innerHTML = '';
-        
-        for(let n = 1; n <= 9; n++) {
+
+        for (let n = 1; n <= 9; n++) {
             const btn = document.createElement('button');
             btn.className = 'magic-square-key';
             btn.textContent = n;
             btn.addEventListener('click', () => this.handleMagicSquareNumber(n));
             keypadEl.appendChild(btn);
         }
-        
+
         const eraseBtn = document.createElement('button');
         eraseBtn.className = 'magic-square-key erase';
         eraseBtn.textContent = 'مسح';
@@ -1977,61 +2140,61 @@ class GameController {
     }
 
     selectMagicSquareCell(r, c) {
-        if(this.magicSquareGiven[r][c]) {
+        if (this.magicSquareGiven[r][c]) {
             document.getElementById('magicSquareStatus').textContent = 'خانة مُعطاة (ثابتة) — لا يمكن تعديلها.';
             return;
         }
-        
-        this.magicSquareSelected = {r, c};
-        
+
+        this.magicSquareSelected = { r, c };
+
         // إزالة التحديد السابق
         document.querySelectorAll('.magic-square-cell').forEach(el => el.classList.remove('selected'));
-        
+
         // تحديد الخانة الجديدة
         const cell = document.querySelector(`[data-r="${r}"][data-c="${c}"]`);
         cell.classList.add('selected');
-        
-        document.getElementById('magicSquareStatus').textContent = `الخانة (${r+1},${c+1}) محددة — اختر رقمًا.`;
+
+        document.getElementById('magicSquareStatus').textContent = `الخانة (${r + 1},${c + 1}) محددة — اختر رقمًا.`;
     }
 
     handleMagicSquareNumber(n) {
-        if(!this.magicSquareSelected) {
+        if (!this.magicSquareSelected) {
             document.getElementById('magicSquareStatus').textContent = 'اختر خانة أولاً.';
             return;
         }
-        
-        const {r, c} = this.magicSquareSelected;
-        if(this.magicSquareGiven[r][c]) {
+
+        const { r, c } = this.magicSquareSelected;
+        if (this.magicSquareGiven[r][c]) {
             document.getElementById('magicSquareStatus').textContent = 'لا يمكن تعديل خانة مُعطاة.';
             return;
         }
-        
+
         this.magicSquareGrid[r][c] = n;
         const cell = document.querySelector(`[data-r="${r}"][data-c="${c}"]`);
         cell.textContent = n;
         cell.classList.add('user');
-        
-        document.getElementById('magicSquareStatus').textContent = `وضعت ${n} في الخانة (${r+1},${c+1}).`;
+
+        document.getElementById('magicSquareStatus').textContent = `وضعت ${n} في الخانة (${r + 1},${c + 1}).`;
     }
 
     handleMagicSquareErase() {
-        if(!this.magicSquareSelected) {
+        if (!this.magicSquareSelected) {
             document.getElementById('magicSquareStatus').textContent = 'اختر خانة أولاً.';
             return;
         }
-        
-        const {r, c} = this.magicSquareSelected;
-        if(this.magicSquareGiven[r][c]) {
+
+        const { r, c } = this.magicSquareSelected;
+        if (this.magicSquareGiven[r][c]) {
             document.getElementById('magicSquareStatus').textContent = 'لا يمكن مسح خانة مُعطاة.';
             return;
         }
-        
+
         this.magicSquareGrid[r][c] = 0;
         const cell = document.querySelector(`[data-r="${r}"][data-c="${c}"]`);
         cell.textContent = '';
         cell.classList.remove('user');
-        
-        document.getElementById('magicSquareStatus').textContent = `مُسِحت الخانة (${r+1},${c+1}).`;
+
+        document.getElementById('magicSquareStatus').textContent = `مُسِحت الخانة (${r + 1},${c + 1}).`;
     }
 
     bindMagicSquareEvents() {
@@ -2040,13 +2203,13 @@ class GameController {
         document.getElementById('newMagicSquareBtn').addEventListener('click', () => this.newMagicSquareGame());
         document.getElementById('resetMagicSquareBtn').addEventListener('click', () => this.resetMagicSquareGame());
         document.getElementById('hintMagicSquareBtn').addEventListener('click', () => this.showMagicSquareHint());
-        
+
         // ربط لوحة المفاتيح
         document.addEventListener('keydown', (e) => {
-            if(e.key >= '1' && e.key <= '9') {
+            if (e.key >= '1' && e.key <= '9') {
                 this.handleMagicSquareNumber(parseInt(e.key, 10));
             }
-            if(e.key === 'Backspace' || e.key === 'Delete') {
+            if (e.key === 'Backspace' || e.key === 'Delete') {
                 this.handleMagicSquareErase();
             }
         });
@@ -2055,34 +2218,34 @@ class GameController {
     checkMagicSquareSolution() {
         // التحقق من اكتمال اللعبة
         let isComplete = true;
-        for(let r = 0; r < this.magicSquareSize; r++) {
-            for(let c = 0; c < this.magicSquareSize; c++) {
-                if(this.magicSquareGrid[r][c] === 0) {
+        for (let r = 0; r < this.magicSquareSize; r++) {
+            for (let c = 0; c < this.magicSquareSize; c++) {
+                if (this.magicSquareGrid[r][c] === 0) {
                     isComplete = false;
                     break;
                 }
             }
-            if(!isComplete) break;
+            if (!isComplete) break;
         }
-        
-        if(!isComplete) {
+
+        if (!isComplete) {
             document.getElementById('magicSquareStatus').textContent = 'لم تكتمل اللعبة بعد. املأ جميع الخلايا الفارغة.';
             return;
         }
-        
+
         // التحقق من صحة الحل
-        if(this.isValidMagicSquare()) {
+        if (this.isValidMagicSquare()) {
             const level = this.getCurrentLevel('المربعات السحرية');
             const baseScore = 80;
             const levelBonus = level * 15;
             const totalScore = baseScore + levelBonus;
-            
+
             const newLevel = this.increaseLevel('المربعات السحرية');
-            
+
             this.showGameResult(`🎉 أحسنت! مربع سحري صحيح! +${totalScore} نقطة`, true);
             this.endGame(true, totalScore);
-            
-            if(newLevel > level) {
+
+            if (newLevel > level) {
                 setTimeout(() => {
                     this.showLevelUpMessage(newLevel);
                 }, 1000);
@@ -2094,37 +2257,37 @@ class GameController {
 
     isValidMagicSquare() {
         // التحقق من الصفوف
-        for(let r = 0; r < this.magicSquareSize; r++) {
+        for (let r = 0; r < this.magicSquareSize; r++) {
             let sum = 0;
-            for(let c = 0; c < this.magicSquareSize; c++) {
+            for (let c = 0; c < this.magicSquareSize; c++) {
                 sum += this.magicSquareGrid[r][c];
             }
-            if(sum !== this.magicSum) return false;
+            if (sum !== this.magicSum) return false;
         }
-        
+
         // التحقق من الأعمدة
-        for(let c = 0; c < this.magicSquareSize; c++) {
+        for (let c = 0; c < this.magicSquareSize; c++) {
             let sum = 0;
-            for(let r = 0; r < this.magicSquareSize; r++) {
+            for (let r = 0; r < this.magicSquareSize; r++) {
                 sum += this.magicSquareGrid[r][c];
             }
-            if(sum !== this.magicSum) return false;
+            if (sum !== this.magicSum) return false;
         }
-        
+
         // التحقق من القطر الرئيسي
         let diagonalSum = 0;
-        for(let i = 0; i < this.magicSquareSize; i++) {
+        for (let i = 0; i < this.magicSquareSize; i++) {
             diagonalSum += this.magicSquareGrid[i][i];
         }
-        if(diagonalSum !== this.magicSum) return false;
-        
+        if (diagonalSum !== this.magicSum) return false;
+
         // التحقق من القطر الثانوي
         diagonalSum = 0;
-        for(let i = 0; i < this.magicSquareSize; i++) {
+        for (let i = 0; i < this.magicSquareSize; i++) {
             diagonalSum += this.magicSquareGrid[i][this.magicSquareSize - 1 - i];
         }
-        if(diagonalSum !== this.magicSum) return false;
-        
+        if (diagonalSum !== this.magicSum) return false;
+
         return true;
     }
 
@@ -2134,62 +2297,62 @@ class GameController {
         document.getElementById('magicSquareStatus').textContent = 'لعبة جديدة — اختر خانة.';
         document.getElementById('magicSquareHint').style.display = 'none';
     }
-    
+
     generateNewMagicSquarePuzzle() {
         // لغز جديد مختلف
         const newPuzzle = [
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0]
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0]
         ];
-        
+
         // وضع أرقام مختلفة كتلميحات
         const hints = [
-            {r: 0, c: 0, value: Math.floor(Math.random() * 9) + 1},
-            {r: 1, c: 1, value: Math.floor(Math.random() * 9) + 1},
-            {r: 2, c: 2, value: Math.floor(Math.random() * 9) + 1}
+            { r: 0, c: 0, value: Math.floor(Math.random() * 9) + 1 },
+            { r: 1, c: 1, value: Math.floor(Math.random() * 9) + 1 },
+            { r: 2, c: 2, value: Math.floor(Math.random() * 9) + 1 }
         ];
-        
+
         // تطبيق التلميحات
         hints.forEach(hint => {
             newPuzzle[hint.r][hint.c] = hint.value;
         });
-        
+
         // تحديث الشبكة
         this.magicSquarePuzzle = newPuzzle;
         this.magicSquareGrid = JSON.parse(JSON.stringify(newPuzzle));
         this.magicSquareSelected = null;
         this.magicSquareGiven = Array(this.magicSquareSize).fill().map(() => Array(this.magicSquareSize).fill(false));
-        
+
         // تحديث التلميحات
         hints.forEach(hint => {
             this.magicSquareGiven[hint.r][hint.c] = true;
         });
-        
+
         // إعادة بناء الشبكة
         this.buildMagicSquareBoard();
-        
+
         // تحديث المجموع المطلوب (قد يتغير حسب التلميحات)
         this.calculateMagicSum();
         document.getElementById('magicSum').textContent = this.magicSum;
     }
-    
+
     calculateMagicSum() {
         // حساب المجموع المطلوب بناءً على التلميحات
         let total = 0;
         let count = 0;
-        
-        for(let r = 0; r < this.magicSquareSize; r++) {
-            for(let c = 0; c < this.magicSquareSize; c++) {
-                if(this.magicSquareGrid[r][c] !== 0) {
+
+        for (let r = 0; r < this.magicSquareSize; r++) {
+            for (let c = 0; c < this.magicSquareSize; c++) {
+                if (this.magicSquareGrid[r][c] !== 0) {
                     total += this.magicSquareGrid[r][c];
                     count++;
                 }
             }
         }
-        
+
         // إذا كان هناك تلميحات كافية، احسب المجموع المطلوب
-        if(count >= 2) {
+        if (count >= 2) {
             this.magicSum = Math.ceil(total / count) * 3; // تقريب للمجموع المطلوب
         } else {
             this.magicSum = 15; // افتراضي
@@ -2214,32 +2377,333 @@ class GameController {
             <p>• الأرقام المعطاة مسبقاً ثابتة</p>
         `;
     }
+
+    // --- Maze Game (لعبة المتاهة) ---
+    generateMazeGame() {
+        const gameContent = document.getElementById('gameContent');
+        gameContent.innerHTML = `
+            <div class="maze-controls">
+                <label for="mazeTopic">اختر الموضوع:</label>
+                <select id="mazeTopic">
+                    <option value="integerPowers">القوى ذات أسس صحيحة</option>
+                    <option value="opsNoBrackets">سلسلة عمليات بدون أقواس</option>
+                    <option value="opsWithBrackets">سلسلة عمليات بأقواس</option>
+                    <option value="powers10">قوى العدد 10</option>
+                    <option value="multiplication">الضرب</option>
+                    <option value="simpleMath">جمع وطرح</option>
+                    <option value="roots">الجذور التربيعية</option>
+                    <option value="algebra">حل المعادلات</option>
+                    <option value="integers">الأعداد النسبية</option>
+                    <option value="fractions">الكسور</option>
+                    <option value="pgcd">القاسم المشترك الأكبر (PGCD)</option>
+                    <option value="expandSimplify">النشر والتبسيط</option>
+                </select>
+                <button class="btn btn-primary" id="btnGenMaze">🔄 توليد متاهة</button>
+                <button class="btn btn-secondary" id="btnPrintMaze">🖨️ طباعة</button>
+            </div>
+            <div class="maze-wrapper" id="mazeContainer"></div>
+        `;
+
+        document.getElementById('btnGenMaze').addEventListener('click', () => this.initMaze());
+        document.getElementById('btnPrintMaze').addEventListener('click', () => {
+            const style = document.createElement('style');
+            style.innerHTML = '@media print { body * { visibility: hidden; } .maze-wrapper, .maze-wrapper * { visibility: visible; } .maze-wrapper { position: absolute; left: 0; top: 0; width: 100%; margin: 0; box-shadow: none; border: none; transform: scale(0.9); } }';
+            document.head.appendChild(style);
+            window.print();
+            document.head.removeChild(style);
+        });
+
+        this.initMaze();
+    }
+
+    initMaze() {
+        const container = document.getElementById('mazeContainer');
+        const topicKey = document.getElementById('mazeTopic').value;
+        const Strategy = MazeMathTopics[topicKey];
+        const ROWS = 4;
+        const COLS = 3;
+
+        // Reset Player Position
+        this.mazePlayerPos = { r: 0, c: 0 };
+
+        container.innerHTML = '';
+        const grid = document.createElement('div');
+        grid.className = 'maze-grid';
+        container.appendChild(grid);
+
+        let path = [{ r: 0, c: 0 }];
+        let curr = { r: 0, c: 0 };
+
+        while (curr.r < ROWS - 1 || curr.c < COLS - 1) {
+            let moves = [];
+            if (curr.c < COLS - 1) moves.push({ r: curr.r, c: curr.c + 1, dir: 'right' });
+            if (curr.r < ROWS - 1) moves.push({ r: curr.r + 1, c: curr.c, dir: 'down' });
+            if (moves.length === 0) break;
+            let move = moves[Math.floor(Math.random() * moves.length)];
+            curr = { r: move.r, c: move.c };
+            path.push(curr);
+            path[path.length - 2].nextDir = move.dir;
+        }
+
+        let cellsData = [];
+        for (let r = 0; r < ROWS; r++) {
+            cellsData[r] = [];
+            for (let c = 0; c < COLS; c++) {
+                let cellDiv = document.createElement('div');
+                cellDiv.className = 'maze-box';
+                cellDiv.style.gridRow = r + 1;
+                cellDiv.style.gridColumn = c + 1;
+
+                let qData = Strategy.getQuestion();
+                let innerContent = "";
+
+                if (r === 0 && c === 0) {
+                    cellDiv.classList.add('start', 'active'); // Active start cell
+                    cellDiv.id = `maze-cell-0-0`;
+                    innerContent = `<span class="maze-label-text">البداية</span><span class="maze-math-text">${qData.html}</span>`;
+                } else if (r === ROWS - 1 && c === COLS - 1) {
+                    cellDiv.classList.add('end');
+                    cellDiv.id = `maze-cell-${ROWS - 1}-${COLS - 1}`;
+                    innerContent = "النهاية";
+                } else {
+                    cellDiv.id = `maze-cell-${r}-${c}`;
+                    innerContent = `<span class="maze-math-text">${qData.html}</span>`;
+                }
+
+                cellDiv.innerHTML = innerContent;
+                cellsData[r][c] = qData;
+                grid.appendChild(cellDiv);
+            }
+        }
+
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                let stepIndex = path.findIndex(p => p.r === r && p.c === c);
+                let isOnPath = (stepIndex !== -1);
+                let correctDir = isOnPath ? path[stepIndex].nextDir : null;
+
+                if (c < COLS - 1) {
+                    let isCorrect = (isOnPath && correctDir === 'right');
+                    this.drawMazeConnector(r, c, 'right', grid, cellsData[r][c], isCorrect, Strategy);
+                }
+                if (r < ROWS - 1) {
+                    let isCorrect = (isOnPath && correctDir === 'down');
+                    this.drawMazeConnector(r, c, 'down', grid, cellsData[r][c], isCorrect, Strategy);
+                }
+            }
+        }
+    }
+
+    drawMazeConnector(r, c, dir, container, cellData, isCorrect, Strategy) {
+        let text = isCorrect ? cellData.display : Strategy.getWrong(cellData.raw, cellData.wrongContext || cellData);
+
+        if (text === "Err" || text === undefined) text = Math.floor(Math.random() * 20) + 1;
+
+        let connector = document.createElement('div');
+        connector.className = 'maze-connector';
+
+        let line = document.createElement('div');
+        line.className = 'maze-connector-line';
+        let label = document.createElement('div');
+        label.className = 'maze-connector-label';
+        label.innerHTML = text;
+
+        const boxSize = 130;
+        const gapSize = 60;
+
+        if (dir === 'right') {
+            let leftPos = (c + 1) * boxSize + (c * gapSize);
+            let topPos = (r * (boxSize + gapSize)) + (boxSize / 2);
+
+            connector.style.left = leftPos + 'px';
+            connector.style.top = (topPos - 20) + 'px';
+            connector.style.width = gapSize + 'px';
+            connector.style.height = '40px';
+
+            line.style.width = '100%';
+            line.style.height = '3px';
+            line.style.top = '20px';
+        } else {
+            let leftPos = (c * (boxSize + gapSize)) + (boxSize / 2);
+            let topPos = (r + 1) * boxSize + (r * gapSize);
+
+            connector.style.left = (leftPos - 30) + 'px';
+            connector.style.top = topPos + 'px';
+            connector.style.width = '60px';
+            connector.style.height = gapSize + 'px';
+
+            line.style.height = '100%';
+            line.style.width = '3px';
+            line.style.left = '50%';
+            line.style.transform = 'translateX(-50%)';
+        }
+        connector.appendChild(line);
+        connector.appendChild(label);
+
+        // Interactive Logic
+        connector.dataset.r = r;
+        connector.dataset.c = c;
+        connector.dataset.dir = dir;
+        connector.dataset.isCorrect = isCorrect;
+
+        connector.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            // Check if connector is reachable from current position
+            let canMove = false;
+            let nextPos = { r: r, c: c }; // Default
+
+            if (dir === 'right') {
+                // If moving right from (r, c) -> (r, c+1)
+                if (this.mazePlayerPos.r === r && this.mazePlayerPos.c === c) {
+                    canMove = true;
+                    nextPos = { r: r, c: c + 1 };
+                }
+                // Bi-directional check (optional, but typical maze implies flow)
+                // For simplicity, we stick to the generated path flow or just adjacency
+            } else if (dir === 'down') {
+                // If moving down from (r, c) -> (r+1, c)
+                if (this.mazePlayerPos.r === r && this.mazePlayerPos.c === c) {
+                    canMove = true;
+                    nextPos = { r: r + 1, c: c };
+                }
+            }
+
+            if (!canMove) {
+                // Try reverse direction check if needed, or just ignore non-adjacent
+                // Actually the loop generates connections from (r,c).
+                // So if player is at (r,c), they can take this connector.
+                // Correct.
+            }
+
+            // Verify adjacency
+            if (this.mazePlayerPos.r !== r || this.mazePlayerPos.c !== c) {
+                // Not at the starting cell of this connector
+                // Allow clicking? No, must be adjacent.
+                return;
+            }
+
+            if (isCorrect) {
+                // Determine new position
+                let newR = (dir === 'down') ? r + 1 : r;
+                let newC = (dir === 'right') ? c + 1 : c;
+
+                // Move Player
+                document.getElementById(`maze-cell-${this.mazePlayerPos.r}-${this.mazePlayerPos.c}`).classList.remove('active');
+                this.mazePlayerPos = { r: newR, c: newC };
+                document.getElementById(`maze-cell-${newR}-${newC}`).classList.add('active');
+
+                // Mark path visual
+                connector.classList.add('correct-path');
+
+                // Check Win
+                if (newR === 3 && newC === 2) { // ROWS-1, COLS-1
+                    setTimeout(() => {
+                        this.showGameResult("أحسنت! لقد وصلت للنهاية بنجاح! 🎉", true);
+                        this.playVictorySound();
+                    }, 300);
+                }
+
+            } else {
+                // Wrong Answer
+                connector.classList.add('wrong-shake');
+                setTimeout(() => connector.classList.remove('wrong-shake'), 500);
+            }
+        });
+
+        container.appendChild(connector);
+    }
+
+
+    playVictorySound() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+
+            const ctx = new AudioContext();
+
+            // 1. "Ta-da" Fanfare (Major Triad Arpeggio)
+            const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+            const start = ctx.currentTime;
+
+            notes.forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.frequency.value = freq;
+                osc.type = 'triangle'; // Brighter than sine, less harsh than square, reliable "game" tone
+
+                gain.gain.setValueAtTime(0, start + i * 0.08);
+                gain.gain.linearRampToValueAtTime(0.15, start + i * 0.08 + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.001, start + i * 0.08 + 0.4);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(start + i * 0.08);
+                osc.stop(start + i * 0.08 + 0.4);
+            });
+
+            // 2. Simulated Applause (Filtered Noise)
+            const bufferSize = ctx.sampleRate * 2.5; // 2.5 seconds
+            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = (Math.random() * 2 - 1); // White noise
+            }
+
+            const noise = ctx.createBufferSource();
+            noise.buffer = buffer;
+
+            const noiseGain = ctx.createGain();
+            const filter = ctx.createBiquadFilter();
+
+            // Filter to make it sound like clapping ("dull" noise)
+            filter.type = 'lowpass';
+            filter.frequency.value = 1200;
+            filter.Q.value = 1;
+
+            // Envelope for applause (Swell and Fade)
+            noiseGain.gain.setValueAtTime(0, start + 0.3);
+            noiseGain.gain.linearRampToValueAtTime(0.25, start + 0.8); // Swell
+            noiseGain.gain.exponentialRampToValueAtTime(0.001, start + 2.5); // Decay
+
+            noise.connect(filter);
+            filter.connect(noiseGain);
+            noiseGain.connect(ctx.destination);
+
+            noise.start(start + 0.3);
+            noise.stop(start + 2.5);
+
+        } catch (e) {
+            console.error("Audio playback failed", e);
+        }
+    }
 }
 
 // --- تهيئة الصفحة --- //
 document.addEventListener('DOMContentLoaded', () => {
     console.log('=== بدء تحميل الصفحة ===');
-    
+
     try {
         // 1. إنشاء GameController
         console.log('1. إنشاء GameController...');
-        
+
         if (typeof GameController === 'undefined') {
             throw new Error('GameController class غير معرف');
         }
-        
+
         const gameController = new GameController();
         console.log('✅ GameController تم إنشاؤه بنجاح');
-        
+
         // 2. عرض لوحة النتائج
         if (gameController.scoreManager) {
             gameController.scoreManager.displayLeaderboard();
             console.log('✅ لوحة النتائج تم عرضها بنجاح');
         }
-        
+
         // 3. ربط الأزرار بطريقة مباشرة
         console.log('2. ربط الأزرار...');
-        
+
         // دالة بسيطة لربط الأزرار
         function bindGameButton(buttonId, gameName) {
             const button = document.getElementById(buttonId);
@@ -2247,22 +2711,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 // إزالة أي event listeners سابقة
                 button.replaceWith(button.cloneNode(true));
                 const newButton = document.getElementById(buttonId);
-                
+
                 // إضافة event listener جديد
-                newButton.onclick = function(e) {
+                newButton.onclick = function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    
+
                     console.log(`🎮 زر ${buttonId} تم الضغط عليه`);
                     console.log(`🎯 بدء لعبة: ${gameName}`);
-                    
+
                     try {
                         // إضافة تأثير بصري
                         this.style.transform = 'scale(0.95)';
                         setTimeout(() => {
                             this.style.transform = 'scale(1)';
                         }, 150);
-                        
+
                         // بدء اللعبة
                         if (gameController && typeof gameController.startGame === 'function') {
                             gameController.startGame(gameName);
@@ -2275,7 +2739,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert(`خطأ في بدء اللعبة: ${gameName}\n${error.message}`);
                     }
                 };
-                
+
                 console.log(`✅ ${buttonId} تم ربطه بـ ${gameName}`);
                 return true;
             } else {
@@ -2283,7 +2747,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return false;
             }
         }
-        
+
         // ربط جميع الأزرار (15 لعبة)
         const games = [
             ['startQuickMath', 'الحساب السريع'],
@@ -2300,22 +2764,23 @@ document.addEventListener('DOMContentLoaded', () => {
             ['startFractionsGame', 'لعبة الكسور'],
             ['startTimeGame', 'لعبة قراءة الساعة'],
             ['startSudokuGame', 'السودوكو'],
-            ['startMagicSquareGame', 'المربعات السحرية']
+            ['startMagicSquareGame', 'المربعات السحرية'],
+            ['startMazeGame', 'لعبة المتاهة']
         ];
-        
+
         let successCount = 0;
         games.forEach(([id, name]) => {
             if (bindGameButton(id, name)) {
                 successCount++;
             }
         });
-        
+
         console.log(`🎯 تم ربط ${successCount}/${games.length} زر بنجاح`);
-        
+
         // 4. ربط زر إنهاء اللعبة
         const endGameBtn = document.getElementById('endGameBtn');
         if (endGameBtn) {
-            endGameBtn.onclick = function(e) {
+            endGameBtn.onclick = function (e) {
                 e.preventDefault();
                 console.log('🔚 زر إنهاء اللعبة تم الضغط عليه');
                 try {
@@ -2330,34 +2795,34 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             console.log('✅ زر إنهاء اللعبة تم ربطه');
         }
-        
+
         // 5. اختبار الأزرار
         console.log('3. اختبار الأزرار...');
         const allButtons = document.querySelectorAll('.game-btn');
         console.log(`🔍 تم العثور على ${allButtons.length} زر في الصفحة`);
-        
+
         // إضافة تأثيرات بصرية
         allButtons.forEach(button => {
             button.style.cursor = 'pointer';
             button.style.transition = 'all 0.2s ease';
-            
+
             // تأثير عند الضغط
             button.addEventListener('mousedown', () => {
                 button.style.transform = 'scale(0.95)';
             });
-            
+
             button.addEventListener('mouseup', () => {
                 button.style.transform = 'scale(1)';
             });
-            
+
             button.addEventListener('mouseleave', () => {
                 button.style.transform = 'scale(1)';
             });
         });
-        
+
         console.log('🎉 === تم تحميل الصفحة بنجاح ===');
         console.log('💡 يمكنك الآن الضغط على أي زر لعبة');
-        
+
         // 6. إضافة رسالة نجاح للمستخدم
         const successMsg = document.createElement('div');
         successMsg.style.cssText = `
@@ -2376,18 +2841,18 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         successMsg.innerHTML = '✅ تم تحميل 15 لعبة تعليمية بنجاح!';
         document.body.appendChild(successMsg);
-        
+
         // إزالة الرسالة بعد 3 ثوان
         setTimeout(() => {
             if (successMsg.parentNode) {
                 successMsg.parentNode.removeChild(successMsg);
             }
         }, 3000);
-        
+
     } catch (error) {
         console.error('❌ خطأ في تهيئة الصفحة:', error);
         console.error('Stack trace:', error.stack);
-        
+
         // عرض رسالة خطأ للمستخدم
         const errorDiv = document.createElement('div');
         errorDiv.style.cssText = `
@@ -2408,7 +2873,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <small>${error.message}</small>
         `;
         document.body.appendChild(errorDiv);
-        
+
         // إزالة رسالة الخطأ بعد 10 ثوان
         setTimeout(() => {
             if (errorDiv.parentNode) {
@@ -2417,4 +2882,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 10000);
     }
 });
+
+// Function to detect and format math/numbers to LTR
+function formatTextWithMath(text) {
+    if (typeof text !== 'string') return text;
+
+    // Regex to find numbers, signed numbers, fractions, and equations within text
+    const mathPattern = /((?:[a-zA-Z]\s*=\s*)?[+\-]?\d+(?:[.,]\d+)?(?:\s*[\/]\s*\d+)?)(?![^<]*>)/g;
+
+    return text.replace(mathPattern, function (match) {
+        return `<span dir="ltr" style="display:inline-block; font-family: 'Courier New', monospace; font-weight: bold;">${match}</span>`;
+    });
+}
 

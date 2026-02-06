@@ -272,8 +272,69 @@ document.addEventListener('DOMContentLoaded', () => {
                         عدد الأشخاص = (5 × 6) / 3 = 30 / 3 = 10 أشخاص.</li>
                 </ol>
             `
-        }
+        },
         // يمكن إضافة المزيد من الوضعيات هنا
+        {
+            title: 'وضعية إدماجية: مشروع بناء منزل',
+            question: `
+                <h4>نص الوضعية:</h4>
+                <p>يملك أحمد قطعة أرض مساحتها 450 متر مربع. خصص 2/3 (ثلثي) المساحة لبناء المنزل، و 1/5 (خمس) المساحة للحديقة، والباقي للمرآب.</p>
+                <h4>الأسئلة:</h4>
+                <ol>
+                    <li>احسب مساحة المنزل بالمتر المربع.</li>
+                    <li>احسب مساحة الحديقة بالمتر المربع.</li>
+                    <li>استنتج مساحة المرآب.</li>
+                    <li>عبر بكسر عن مساحة المرآب بالنسبة للمساحة الكلية.</li>
+                </ol>
+            `,
+            solution: `
+                <h4>خطوات الحل:</h4>
+                <ol>
+                    <li><strong>حساب مساحة المنزل:</strong><br>
+                        المساحة = 450 × (2/3) = 900 / 3 = 300 متر مربع.</li>
+                    <li><strong>حساب مساحة الحديقة:</strong><br>
+                        المساحة = 450 × (1/5) = 90 متر مربع.</li>
+                    <li><strong>حساب مساحة المرآب:</strong><br>
+                        مساحة المرآب = المساحة الكلية - (مساحة المنزل + مساحة الحديقة)<br>
+                        مساحة المرآب = 450 - (300 + 90) = 450 - 390 = 60 متر مربع.</li>
+                    <li><strong>التعبير بكسر عن مساحة المرآب:</strong><br>
+                        الكسر = 60 / 450<br>
+                        بالاختزال (القسمة على 30): 2 / 15.</li>
+                </ol>
+            `
+        },
+        {
+            title: 'وضعية إدماجية: فاتورة الكهرباء',
+            question: `
+                <h4>نص الوضعية:</h4>
+                <p>سجل عداد الكهرباء لمنزل في بداية الثلاثي 12500 kWh، وفي نهاية الثلاثي سجل 13800 kWh.</p>
+                <p>إذا كان سعر الكيلوواط ساعي الواحد هو 4 دينار، ومبلغ الاشتراك الثابت هو 350 دينار، والضريبة تقدر بـ 9% من مبلغ الاستهلاك.</p>
+                <h4>الأسئلة:</h4>
+                <ol>
+                    <li>احسب كمية الكهرباء المستهلكة خلال هذا الثلاثي.</li>
+                    <li>احسب تكلفة الاستهلاك (دون احتساب الاشتراك والضريبة).</li>
+                    <li>احسب قيمة الضريبة.</li>
+                    <li>ما هو المبلغ الإجمالي للفاتورة (شامل الاشتراك والضريبة)؟</li>
+                </ol>
+            `,
+            solution: `
+                <h4>خطوات الحل:</h4>
+                <ol>
+                    <li><strong>حساب كمية الكهرباء المستهلكة:</strong><br>
+                        الكمية = التسجيل الجديد - التسجيل القديم<br>
+                        الكمية = 13800 - 12500 = 1300 kWh.</li>
+                    <li><strong>حساب تكلفة الاستهلاك:</strong><br>
+                        التكلفة = الكمية × سعر الوحدة<br>
+                        التكلفة = 1300 × 4 = 5200 دينار.</li>
+                    <li><strong>حساب قيمة الضريبة:</strong><br>
+                        الضريبة = تكلفة الاستهلاك × (9 / 100)<br>
+                        الضريبة = 5200 × 0.09 = 468 دينار.</li>
+                    <li><strong>حساب المبلغ الإجمالي للفاتورة:</strong><br>
+                        المبلغ = تكلفة الاستهلاك + الاشتراك + الضريبة<br>
+                        المبلغ = 5200 + 350 + 468 = 6018 دينار.</li>
+                </ol>
+            `
+        }
     ];
 
     let currentSituationIndex = 0;
@@ -288,8 +349,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadSituation(index) {
         const situation = situations[index];
         situationTitleElement.textContent = situation.title;
-        situationQuestionElement.innerHTML = situation.question;
-        solutionContentElement.innerHTML = situation.solution;
+        situationQuestionElement.innerHTML = formatTextWithMath(situation.question);
+        solutionContentElement.innerHTML = formatTextWithMath(situation.solution);
         situationSolutionElement.style.display = 'none'; // إخفاء الحل عند تحميل وضعية جديدة
     }
 
@@ -305,3 +366,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // تحميل أول وضعية عند فتح الصفحة
     loadSituation(currentSituationIndex);
 });
+
+// Function to detect and format math/numbers to LTR
+function formatTextWithMath(text) {
+    if (typeof text !== 'string') return text;
+
+    // Check if the text is already HTML (contains tags)
+    // if (text.includes('<') && text.includes('>')) return text;
+    // However, situations content is full of HTML tags.
+    // The previous regex avoids tags: (?![^<]*>)
+    // So we can safely use it on HTML content.
+
+    // Regex to find numbers, signed numbers, fractions, and equations within text
+    // Matches:
+    // 1. Signed/Unsigned numbers at start or end, or surrounded by spaces/punctuation: -5, +3.5, 10
+    // 2. Fractions: 1/2, -3/4
+    // 3. Equations: x = 5
+
+    // We use a replacement function to wrap matches in ltr span
+    const mathPattern = /((?:[a-zA-Z]\s*=\s*)?[+\-]?\d+(?:[.,]\d+)?(?:\s*[\/]\s*\d+)?)(?![^<]*>)/g;
+
+    return text.replace(mathPattern, function (match) {
+        // Avoid wrapping if it already looks like it's inside a span (simple check)
+        return `<span dir="ltr" style="display:inline-block; font-family: 'Courier New', monospace; font-weight: bold;">${match}</span>`;
+    });
+}

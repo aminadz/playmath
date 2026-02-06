@@ -4,6 +4,13 @@ let currentLesson = null;
 let currentExerciseIndex = 0;
 let exercises = [];
 
+// XP Helper (Safe call)
+function awardXP(amount) {
+    if (window.Dashboard && window.Dashboard.addXP) {
+        window.Dashboard.addXP(amount);
+    }
+}
+
 // Dynamic Curriculum Data Structure
 let curriculum = {};
 
@@ -33,7 +40,7 @@ function buildCurriculum() {
 }
 
 // Event Listeners
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeApp();
     showMainMenu(); // Show main menu by default
 });
@@ -46,7 +53,7 @@ function initializeApp() {
         // Add click listeners to level cards
         const levelCards = document.querySelectorAll('.level-card');
         levelCards.forEach(card => {
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function () {
                 const level = parseInt(this.getAttribute('data-level'));
                 if (curriculum[level]) {
                     selectLevel(level);
@@ -64,15 +71,15 @@ function initializeApp() {
     // Add event listeners for exercise controls
     const showSolutionBtn = document.getElementById('showSolutionBtn');
     const nextExerciseBtn = document.getElementById('nextExerciseBtn');
-    
+
     if (showSolutionBtn) {
         showSolutionBtn.addEventListener('click', toggleSolution);
     }
-    
+
     if (nextExerciseBtn) {
         nextExerciseBtn.addEventListener('click', nextExercise);
     }
-    
+
     // Add event listener for back to levels button
     const backToLevelsBtn = document.getElementById('backToLevels');
     if (backToLevelsBtn) {
@@ -81,7 +88,7 @@ function initializeApp() {
 
     // Initialize progress
     updateProgress(0);
-    
+
     // Update total exercises count
     updateTotalExercises();
 }
@@ -91,30 +98,30 @@ function selectLevel(level) {
         console.error('Level not found:', level);
         return;
     }
-    
+
     currentLevel = level;
     currentLesson = null;
     currentExerciseIndex = 0;
-    
+
     // Hide main menu, level selection and show lesson selection
     const mainMenu = document.getElementById('mainMenu');
     const levelSelection = document.getElementById('levelSelection');
     const lessonSelection = document.getElementById('lessonSelection');
     const exerciseSection = document.getElementById('exerciseSection');
-    
+
     if (mainMenu && levelSelection && lessonSelection && exerciseSection) {
         mainMenu.style.display = 'none';
         levelSelection.style.display = 'none';
         lessonSelection.style.display = 'block';
         exerciseSection.style.display = 'none';
     }
-    
+
     // Update lesson title
     document.getElementById('lessonTitle').textContent = `اختر الدرس - ${curriculum[level].title}`;
-    
+
     // Populate lessons
     populateLessons(level);
-    
+
     // Add animation
     document.getElementById('lessonSelection').classList.add('fade-in');
 }
@@ -125,27 +132,27 @@ function populateLessons(level) {
         console.error('Lessons grid not found');
         return;
     }
-    
+
     lessonsGrid.innerHTML = '';
-    
+
     const lessons = curriculum[level].lessons;
-    
+
     Object.keys(lessons).forEach(lessonKey => {
         const lesson = lessons[lessonKey];
         const lessonCard = document.createElement('div');
         lessonCard.className = 'lesson-card';
         lessonCard.setAttribute('data-lesson', lessonKey);
-        
+
         lessonCard.innerHTML = `
             <h3>${lesson.title}</h3>
             <p>${lesson.description}</p>
             <small>${lesson.exercises.length} تمرين</small>
         `;
-        
-        lessonCard.addEventListener('click', function() {
+
+        lessonCard.addEventListener('click', function () {
             selectLesson(lessonKey);
         });
-        
+
         lessonsGrid.appendChild(lessonCard);
     });
 }
@@ -155,7 +162,7 @@ function selectLesson(lessonKey) {
         console.error('Lesson not found:', lessonKey);
         return;
     }
-    
+
     currentLesson = lessonKey;
     currentExerciseIndex = 0;
 
@@ -165,7 +172,7 @@ function selectLesson(lessonKey) {
         console.error('Exercise content not found');
         return;
     }
-    
+
     exerciseContent.innerHTML = `
         <div class="exercise-question" id="exerciseQuestion"></div>
         <div class="exercise-options" id="exerciseOptions"></div>
@@ -183,7 +190,7 @@ function selectLesson(lessonKey) {
     const mainMenu = document.getElementById('mainMenu');
     const lessonSelection = document.getElementById('lessonSelection');
     const exerciseSection = document.getElementById('exerciseSection');
-    
+
     if (mainMenu && lessonSelection && exerciseSection) {
         mainMenu.style.display = 'none';
         lessonSelection.style.display = 'none';
@@ -217,13 +224,29 @@ function loadExercise() {
     }
 
     // Update exercise title
-    exerciseTitle.textContent = 
+    exerciseTitle.textContent =
         `${curriculum[currentLevel].lessons[currentLesson].title} - التمرين ${currentExerciseIndex + 1}`;
 
     // Load question
+    let difficultyBadge = '';
+    if (exercise.difficulty) {
+        let badgeClass = 'badge-medium'; // Default
+        let badgeText = 'متوسط';
+
+        if (exercise.difficulty === 'easy') {
+            badgeClass = 'badge-easy';
+            badgeText = 'سهل';
+        } else if (exercise.difficulty === 'hard') {
+            badgeClass = 'badge-hard';
+            badgeText = 'صعب';
+        }
+
+        difficultyBadge = `<span class="badge ${badgeClass}">${badgeText}</span>`;
+    }
+
     exerciseQuestion.innerHTML = `
-        <h3><i class="fas fa-question-circle"></i> السؤال:</h3>
-        <p>${exercise.question}</p>
+        <h3><i class="fas fa-question-circle"></i> السؤال: ${difficultyBadge}</h3>
+        <p>${formatTextWithMath(exercise.question)}</p>
     `;
 
     // Clear previous options and hide solution/feedback
@@ -239,7 +262,7 @@ function loadExercise() {
     exercise.options.forEach((option, index) => {
         const optionBtn = document.createElement('button');
         optionBtn.className = 'option-btn';
-        optionBtn.innerHTML = option;
+        optionBtn.innerHTML = formatTextWithMath(option);
         optionBtn.addEventListener('click', () => checkAnswer(index, exercise.answer, optionBtn));
         optionsContainer.appendChild(optionBtn);
     });
@@ -254,6 +277,34 @@ function loadExercise() {
     } else {
         nextBtn.innerHTML = '<i class="fas fa-forward"></i> التمرين التالي';
     }
+}
+
+// Function to detect and format math/numbers to LTR
+function formatTextWithMath(text) {
+    if (typeof text !== 'string') return text;
+
+    // Check if the text is already HTML (contains tags)
+    // Removed to allow formatting within HTML (e.g. superscripts)
+    // if (text.includes('<') && text.includes('>')) return text;
+
+    // Regex to find numbers, signed numbers, fractions, and equations within text
+    // Matches:
+    // 1. Signed/Unsigned numbers at start or end, or surrounded by spaces/punctuation: -5, +3.5, 10
+    // 2. Fractions: 1/2, -3/4
+    // 3. Equations: x = 5
+
+    // We use a replacement function to wrap matches in ltr span
+    const mathPattern = /((?:[a-zA-Z]\s*=\s*)?[+\-]?\d+(?:[.,]\d+)?(?:\s*[\/]\s*\d+)?)(?![^<]*>)/g;
+
+    // Simple check to avoid wrapping everything (like "Exercise 1") if not needed, 
+    // but for options usually we want to enforce LTR on any number-like sequence.
+    // However, being careful not to break Arabic text if it coincidentally has numbers.
+    // Given the context (Math exercises), numbers should pretty much always be LTR.
+
+    return text.replace(mathPattern, function (match) {
+        // Avoid wrapping if it already looks like it's inside a span (simple check)
+        return `<span dir="ltr" style="display:inline-block; font-family: 'Courier New', monospace; font-weight: bold;">${match}</span>`;
+    });
 }
 
 function checkAnswer(selectedOptionIndex, correctAnswer, btnElement) {
@@ -276,32 +327,63 @@ function checkAnswer(selectedOptionIndex, correctAnswer, btnElement) {
     // If the selected answer is wrong, highlight it as incorrect
     if (!isCorrect) {
         btnElement.classList.add('incorrect');
+    } else {
+        // Play correct sound
+        playCorrectSound();
+        // Award XP
+        awardXP(10);
     }
 
     // Show the next exercise button and hide the solution button
     const nextBtn = document.getElementById('nextExerciseBtn');
     const showSolutionBtn = document.getElementById('showSolutionBtn');
-    
+
     if (nextBtn && showSolutionBtn) {
         nextBtn.style.display = 'inline-block';
         showSolutionBtn.style.display = 'none';
     }
-    
+
     // Update progress after answering
     const progress = ((currentExerciseIndex + 1) / exercises.length) * 100;
     updateProgress(progress);
+}
+
+function playCorrectSound() {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        // Pleasant "Ding" (High C)
+        osc.frequency.value = 1046.50; // C6
+        osc.type = 'sine'; // Pure tone
+
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 0.5);
+    } catch (e) {
+        console.error("Sound playback failed", e);
+    }
 }
 
 function toggleSolution() {
     const solutionDiv = document.getElementById('exerciseSolution');
     const solutionContent = document.getElementById('solutionContent');
     const exercise = exercises[currentExerciseIndex];
-    
+
     if (!solutionDiv || !solutionContent || !exercise) {
         console.error('Required elements not found for solution');
         return;
     }
-    
+
     // Populate and show the solution
     if (currentLesson === "مقارنة وترتيب الأعداد العشرية") {
         // For ordering questions that contain '|', add specific styling
@@ -314,12 +396,12 @@ function toggleSolution() {
     } else {
         // Check if exercise has a solution property
         if (exercise.solution) {
-            solutionContent.innerHTML = `<div style="text-align: left; direction: ltr; font-family: 'Courier New', monospace; background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0;">${exercise.solution}</div>`;
+            solutionContent.innerHTML = `<div style="text-align: right; direction: rtl; font-family: 'Cairo', sans-serif; background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0;">${formatTextWithMath(exercise.solution)}</div>`;
         } else {
-        solutionContent.innerHTML = exercise.answer;
+            solutionContent.innerHTML = formatTextWithMath(exercise.answer);
         }
     }
-    
+
     solutionDiv.style.display = 'block';
 
     // Highlight the correct option button using index-based comparison
@@ -336,7 +418,7 @@ function toggleSolution() {
     // Show next button and hide solution button
     const nextBtn = document.getElementById('nextExerciseBtn');
     const showSolutionBtn = document.getElementById('showSolutionBtn');
-    
+
     if (nextBtn && showSolutionBtn) {
         nextBtn.style.display = 'inline-block';
         showSolutionBtn.style.display = 'none';
@@ -349,7 +431,7 @@ function toggleSolution() {
 
 function nextExercise() {
     currentExerciseIndex++;
-    
+
     if (currentExerciseIndex >= exercises.length) {
         // All exercises completed
         showCompletionMessage();
@@ -364,7 +446,7 @@ function showCompletionMessage() {
         console.error('Exercise content not found for completion message');
         return;
     }
-    
+
     exerciseContent.innerHTML = `
         <div style="text-align: center; padding: 40px;">
             <i class="fas fa-trophy" style="font-size: 4rem; color: #ffd700; margin-bottom: 20px;"></i>
@@ -385,7 +467,7 @@ function showCompletionMessage() {
             </div>
         </div>
     `;
-    
+
     updateProgress(100);
 }
 
@@ -394,20 +476,20 @@ function showMainMenu() {
     const levelSelection = document.getElementById('levelSelection');
     const lessonSelection = document.getElementById('lessonSelection');
     const exerciseSection = document.getElementById('exerciseSection');
-    
+
     if (mainMenu && levelSelection && lessonSelection && exerciseSection) {
         mainMenu.style.display = 'block';
         levelSelection.style.display = 'none';
         lessonSelection.style.display = 'none';
         exerciseSection.style.display = 'none';
     }
-    
+
     // Reset variables
     currentLevel = null;
     currentLesson = null;
     currentExerciseIndex = 0;
     exercises = [];
-    
+
     updateProgress(0);
 }
 
@@ -424,20 +506,20 @@ function showLevelSelection() {
     const levelSelection = document.getElementById('levelSelection');
     const lessonSelection = document.getElementById('lessonSelection');
     const exerciseSection = document.getElementById('exerciseSection');
-    
+
     if (mainMenu && levelSelection && lessonSelection && exerciseSection) {
         mainMenu.style.display = 'none';
         levelSelection.style.display = 'block';
         lessonSelection.style.display = 'none';
         exerciseSection.style.display = 'none';
     }
-    
+
     // Reset variables
     currentLevel = null;
     currentLesson = null;
     currentExerciseIndex = 0;
     exercises = [];
-    
+
     updateProgress(0);
 }
 
@@ -447,19 +529,19 @@ function showLessonSelection() {
         const levelSelection = document.getElementById('levelSelection');
         const lessonSelection = document.getElementById('lessonSelection');
         const exerciseSection = document.getElementById('exerciseSection');
-        
+
         if (mainMenu && levelSelection && lessonSelection && exerciseSection) {
             mainMenu.style.display = 'none';
             levelSelection.style.display = 'none';
             lessonSelection.style.display = 'block';
             exerciseSection.style.display = 'none';
         }
-        
+
         // Reset exercise variables
         currentLesson = null;
         currentExerciseIndex = 0;
         exercises = [];
-        
+
         updateProgress(0);
     }
 }
@@ -467,7 +549,7 @@ function showLessonSelection() {
 function updateProgress(percentage) {
     const progressFill = document.getElementById('progressFill');
     const progressText = document.getElementById('progressText');
-    
+
     if (progressFill && progressText) {
         progressFill.style.width = percentage + '%';
         progressText.textContent = Math.round(percentage) + '%';
@@ -475,7 +557,7 @@ function updateProgress(percentage) {
 }
 
 // Keyboard shortcuts
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
     if (event.key === 'ArrowRight' || event.key === ' ') {
         // Next exercise or show solution
         const exerciseSection = document.getElementById('exerciseSection');
@@ -488,13 +570,13 @@ document.addEventListener('keydown', function(event) {
             }
         }
     }
-    
+
     if (event.key === 'Escape') {
         // Go back
         const exerciseSection = document.getElementById('exerciseSection');
         const lessonSelection = document.getElementById('lessonSelection');
         const levelSelection = document.getElementById('levelSelection');
-        
+
         if (exerciseSection && exerciseSection.style.display !== 'none') {
             showLessonSelection();
         } else if (lessonSelection && lessonSelection.style.display !== 'none') {
@@ -503,7 +585,7 @@ document.addEventListener('keydown', function(event) {
             showMainMenu();
         }
     }
-    
+
     if (event.key === 'Home') {
         // Go to main menu
         showMainMenu();
@@ -541,13 +623,13 @@ function shuffleArray(array) {
 // Function to update total exercises count
 function updateTotalExercises() {
     let total = 0;
-    
+
     for (let level in curriculum) {
         for (let lesson in curriculum[level].lessons) {
             total += curriculum[level].lessons[lesson].exercises.length;
         }
     }
-    
+
     const totalExercisesElement = document.getElementById('totalExercises');
     if (totalExercisesElement) {
         totalExercisesElement.textContent = total;
@@ -560,7 +642,7 @@ function showLevelSelection() {
     const levelSelection = document.getElementById('levelSelection');
     const lessonSelection = document.getElementById('lessonSelection');
     const exerciseSection = document.getElementById('exerciseSection');
-    
+
     if (mainMenu && levelSelection && lessonSelection && exerciseSection) {
         mainMenu.style.display = 'none';
         levelSelection.style.display = 'block';
@@ -584,14 +666,7 @@ function showCalculator() {
     window.location.href = 'calculator.html';
 }
 
-// Function to show graphing
-function showGraphing() {
-    window.location.href = 'graphing.html';
-}
-
-function showGraphingDesktop() {
-    window.location.href = 'graphing-desktop.html';
-}
+// Graphing functions removed - handled inline in index.html
 
 // Function to show lesson selection
 function showLessonSelection() {
@@ -599,7 +674,7 @@ function showLessonSelection() {
     const levelSelection = document.getElementById('levelSelection');
     const lessonSelection = document.getElementById('lessonSelection');
     const exerciseSection = document.getElementById('exerciseSection');
-    
+
     if (mainMenu && levelSelection && lessonSelection && exerciseSection) {
         mainMenu.style.display = 'none';
         levelSelection.style.display = 'none';

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الأدوات الحاسبة - منصة الرياضيات التفاعلية</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css?v=103">
+    <link rel="stylesheet" href="assets/css/cairo-font.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -34,6 +37,9 @@
         </button>
         <button class="nav-tab" data-tab="geometry">
             <i class="fas fa-shapes"></i> أدوات هندسية
+        </button>
+        <button class="nav-tab" data-tab="solvers">
+            <i class="fas fa-brain"></i> حلول مفصلة
         </button>
     </nav>
 
@@ -149,6 +155,21 @@
                 </div>
             </div>
         </div>
+
+        <!-- Solvers Tab -->
+        <div class="tab-content" id="solvers">
+            <div class="solvers-container">
+                <div class="solver-selector">
+                    <button class="solver-btn active" data-solver="pgcd">القاسم المشترك (PGCD)</button>
+                    <button class="solver-btn" data-solver="linear-system">جملة معادلتين</button>
+                    <button class="solver-btn" data-solver="fractions">الكسور</button>
+                    <button class="solver-btn" data-solver="pythagoras">فيثاغورس</button>
+                </div>
+                <div class="solver-content" id="solverContent">
+                    <!-- Solvers will be loaded here -->
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -172,4 +193,5 @@
 
     <script src="calculator.js"></script>
 </body>
+
 </html>
